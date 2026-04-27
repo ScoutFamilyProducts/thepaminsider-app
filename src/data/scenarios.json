@@ -1,0 +1,874 @@
+[
+  {
+    "id": "scenario_001",
+    "title": "The Forgotten Domain Admin",
+    "category": "Access Control",
+    "difficulty": "Beginner",
+    "scenario": "A senior systems administrator was promoted to a management role two years ago. Their domain admin account was never removed from the Active Directory. During a routine audit, the security team discovered the account still had full domain admin privileges, though the person hadn't logged in for 18 months. An attacker could have used this sleeping account.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The admin password was too weak", "correct": false },
+      { "id": "b", "text": "Access was not deprovisioned when the role changed", "correct": true },
+      { "id": "c", "text": "The person shouldn't have been an admin at all", "correct": false },
+      { "id": "d", "text": "The account wasn't protected with MFA", "correct": false }
+    ],
+    "lesson": "Principle of least privilege requires removing access when it's no longer needed. Role changes are a common time when old privileges linger. Every account review and promotion should include an access review.",
+    "pamControls": [
+      "Access Recertification",
+      "User Deprovisioning",
+      "Privilege Creep Prevention",
+      "Identity Governance"
+    ],
+    "relatedTerms": ["privilege_creep", "access_deprovisioning", "least_privilege", "identity_governance"],
+    "roleLens": {
+      "admin": "Removed admins need to give up all privileged accounts.",
+      "ciso": "Access deprovisioning is a compliance requirement.",
+      "auditor": "Track all role changes. Verify access removals.",
+      "helpdesk": "Offboarding checklist must include every system.",
+      "business": "People move. Their access must follow."
+    }
+  },
+  {
+    "id": "scenario_002",
+    "title": "The Compromised Service Account",
+    "category": "Credential Management",
+    "difficulty": "Beginner",
+    "scenario": "A service account credential was discovered in plain text in a batch script stored on a shared drive. The account had permissions to the payroll database. For six months, anyone with access to the shared drive could have accessed payroll data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The script should have been on a more secure drive", "correct": false },
+      { "id": "b", "text": "Credentials were stored in plain text instead of a vault", "correct": true },
+      { "id": "c", "text": "The service account had too many permissions", "correct": false },
+      { "id": "d", "text": "The script owner wasn't trained on security", "correct": false }
+    ],
+    "lesson": "Service account credentials should never be stored in code, scripts, or configuration files as plain text. Use a centralized credential vault with access controls and rotation policies.",
+    "pamControls": [
+      "Credential Vault",
+      "Secret Management",
+      "Credential Rotation",
+      "Just-In-Time Access"
+    ],
+    "relatedTerms": ["password_vault", "secret_management", "service_account", "credential_rotation"],
+    "roleLens": {
+      "admin": "Never put secrets in scripts. Use vaults.",
+      "ciso": "Secrets in scripts mean audit failures.",
+      "auditor": "Check for secrets in code repositories.",
+      "helpdesk": "Report found credentials immediately.",
+      "business": "Payroll is always a target."
+    }
+  },
+  {
+    "id": "scenario_003",
+    "title": "The Privileged User with No Monitoring",
+    "category": "Continuous Monitoring",
+    "difficulty": "Beginner",
+    "scenario": "An insider downloaded 50GB of customer data over three weeks using their privileged database account. Nobody noticed until the data appeared on the dark web. The account had full access but zero session recording or behavioral monitoring.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The user shouldn't have had so much access", "correct": false },
+      { "id": "b", "text": "Access existed without monitoring or accountability", "correct": true },
+      { "id": "c", "text": "The network wasn't segmented properly", "correct": false },
+      { "id": "d", "text": "Antivirus didn't catch the data exfiltration", "correct": false }
+    ],
+    "lesson": "Privileged access must always be paired with monitoring and accountability. Grant access based on verified need, then continuously monitor and record activity. Detect anomalies in data access patterns and alert immediately.",
+    "pamControls": [
+      "Session Recording",
+      "Continuous Monitoring",
+      "Behavioral Analytics",
+      "Audit Trails",
+      "Data Loss Prevention"
+    ],
+    "relatedTerms": ["continuous_monitoring", "session_recording", "behavioral_analytics", "insider_threat"],
+    "roleLens": {
+      "admin": "Watch what privileged users do.",
+      "ciso": "Unmonitored access is unacceptable.",
+      "auditor": "Require session recordings.",
+      "helpdesk": "Report unusual access patterns.",
+      "business": "Unmonitored privilege is liability."
+    }
+  },
+  {
+    "id": "scenario_004",
+    "title": "The Reused Admin Password",
+    "category": "Credential Management",
+    "difficulty": "Beginner",
+    "scenario": "A LinkedIn breach exposed millions of credentials. An admin's password appeared in the leaked data. The same password was also used for their domain admin account. An attacker tested the credentials and gained full network control.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The admin reused passwords across accounts", "correct": true },
+      { "id": "b", "text": "LinkedIn was not secure", "correct": false },
+      { "id": "c", "text": "The organization wasn't monitoring the dark web", "correct": false },
+      { "id": "d", "text": "The password wasn't long enough", "correct": false }
+    ],
+    "lesson": "Privileged accounts must have unique, randomly generated passwords. They should be stored in a vault and rotated regularly. Users should never reuse passwords.",
+    "pamControls": [
+      "Password Vault",
+      "Unique Credentials per Account",
+      "Credential Rotation",
+      "MFA on Privileged Accounts"
+    ],
+    "relatedTerms": ["credential_stuffing", "password_vault", "mfa", "credential_rotation"],
+    "roleLens": {
+      "admin": "Never reuse admin passwords.",
+      "ciso": "Enforce unique passwords for privileged accounts.",
+      "auditor": "Verify password policies.",
+      "helpdesk": "Don't let admins reuse passwords.",
+      "business": "One breached credential can be catastrophic."
+    }
+  },
+  {
+    "id": "scenario_005",
+    "title": "The Excessive Privilege Window",
+    "category": "Access Control",
+    "difficulty": "Intermediate",
+    "scenario": "A developer needed database admin access for 2 hours to perform emergency maintenance. Instead of using just-in-time access, the organization gave them standing privilege for 30 days 'just in case they needed it again.' After 27 days, they forgot they still had access. Their workstation was compromised by malware. The attacker used the forgotten admin access to steal data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The developer didn't get enough training", "correct": false },
+      { "id": "b", "text": "Privilege was granted for too long and didn't match the actual need", "correct": true },
+      { "id": "c", "text": "The developer's computer should have had antivirus", "correct": false },
+      { "id": "d", "text": "The workstation wasn't on a VPN", "correct": false }
+    ],
+    "lesson": "Just-In-Time access grants privilege only for the duration needed, then automatically revokes it. This minimizes the window an attacker has to exploit forgotten privileges.",
+    "pamControls": [
+      "Just-In-Time Access",
+      "Approval Workflows",
+      "Time-Limited Elevation",
+      "Automated Revocation"
+    ],
+    "relatedTerms": ["just_in_time_access", "standing_privilege", "least_privilege", "privilege_escalation"],
+    "roleLens": {
+      "admin": "Grant privilege for only as long as needed.",
+      "ciso": "JIT access reduces risk exponentially.",
+      "auditor": "Require time limits on all access grants.",
+      "helpdesk": "Educate users on temporary access.",
+      "business": "Shorter access windows mean less exposure."
+    }
+  },
+  {
+    "id": "scenario_006",
+    "title": "The Lateral Movement Attack",
+    "category": "Network Security",
+    "difficulty": "Intermediate",
+    "scenario": "An attacker compromised a basic user account. That account had permissions to access a file share. The file share contained a backup of a database admin's credentials. Using those credentials, the attacker pivoted to the database and extracted years of financial data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The user account had too much access", "correct": false },
+      { "id": "b", "text": "Systems weren't segmented; one compromise became a full breach", "correct": true },
+      { "id": "c", "text": "The database didn't have encryption", "correct": false },
+      { "id": "d", "text": "The backup was outdated", "correct": false }
+    ],
+    "lesson": "Assume breach. Design networks so that compromising one account doesn't give attacker free access to everything. Segmentation and zero trust stop lateral movement.",
+    "pamControls": [
+      "Microsegmentation",
+      "Zero Trust Architecture",
+      "Network Isolation",
+      "Lateral Movement Detection"
+    ],
+    "relatedTerms": ["lateral_movement", "microsegmentation", "zero_trust", "network_segmentation"],
+    "roleLens": {
+      "admin": "Segment your networks aggressively.",
+      "ciso": "Zero trust stops lateral movement.",
+      "auditor": "Verify network boundaries exist.",
+      "helpdesk": "Report cross-segment access attempts.",
+      "business": "One breach doesn't mean total loss."
+    }
+  },
+  {
+    "id": "scenario_007",
+    "title": "The Missing MFA",
+    "category": "Authentication",
+    "difficulty": "Beginner",
+    "scenario": "A domain admin's password was phished. The attacker had the password but the admin had MFA enabled... except for remote desktop access, where MFA was 'too inconvenient.' The attacker used RDP to access the domain controller and compromised the entire domain.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The admin should have used a longer password", "correct": false },
+      { "id": "b", "text": "MFA wasn't enabled on all privileged access methods", "correct": true },
+      { "id": "c", "text": "The admin's password was weak", "correct": false },
+      { "id": "d", "text": "The domain controller wasn't patched", "correct": false }
+    ],
+    "lesson": "MFA must be enabled on ALL privileged access methods, including RDP, SSH, APIs, and administrative tools. Privileged remote access should never be directly exposed to the internet — route it through a secured gateway or jump host, and require MFA on all access paths. Convenience arguments fail in the face of breach costs.",
+    "pamControls": [
+      "Multi-Factor Authentication",
+      "MFA on All Privileged Access",
+      "Hardware Security Keys",
+      "Passwordless Authentication"
+    ],
+    "relatedTerms": ["mfa", "phishing", "authentication", "credential_compromise"],
+    "roleLens": {
+      "admin": "MFA on everything. No exceptions.",
+      "ciso": "MFA on privileged access is non-negotiable.",
+      "auditor": "Require MFA for all admin access.",
+      "helpdesk": "Support MFA users without shortcuts.",
+      "business": "Inconvenience beats breach."
+    }
+  },
+  {
+    "id": "scenario_008",
+    "title": "The Unpatched Privilege Escalation",
+    "category": "Vulnerability Management",
+    "difficulty": "Intermediate",
+    "scenario": "A security bulletin warned of a privilege escalation vulnerability in Windows Server. An organization's policy said 'patch within 90 days.' Exactly 89 days later, an attacker exploited the vulnerability to escalate from user to domain admin. The data center was compromised before the 90-day patch window closed.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The patch window was too long", "correct": true },
+      { "id": "b", "text": "The server wasn't monitored properly", "correct": false },
+      { "id": "c", "text": "The server should have had more antivirus", "correct": false },
+      { "id": "d", "text": "The admin didn't know about the vulnerability", "correct": false }
+    ],
+    "lesson": "Privilege escalation vulnerabilities should be patched immediately. Attack windows are measured in days and hours, not months. Risk-based prioritization matters.",
+    "pamControls": [
+      "Patch Management",
+      "Vulnerability Management",
+      "Privilege Escalation Detection",
+      "Rapid Response Processes"
+    ],
+    "relatedTerms": ["privilege_escalation", "patch_management", "vulnerability_management", "threat_intelligence"],
+    "roleLens": {
+      "admin": "Patch privilege escalation flaws first.",
+      "ciso": "Prioritize privilege flaws in patch policy.",
+      "auditor": "Require fast patch windows for critical vulns.",
+      "helpdesk": "Support emergency patching.",
+      "business": "Privilege exploits spread fastest."
+    }
+  },
+  {
+    "id": "scenario_009",
+    "title": "The Shared Admin Account",
+    "category": "Access Control",
+    "difficulty": "Beginner",
+    "scenario": "A team of 5 system admins shared the same admin account because it was 'easier than managing separate accounts.' When suspicious activity occurred, nobody knew which admin did what. The logs just showed the shared account name. Investigation was impossible.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "There were too many admins", "correct": false },
+      { "id": "b", "text": "Admin actions couldn't be attributed to specific individuals", "correct": true },
+      { "id": "c", "text": "The account password wasn't complex enough", "correct": false },
+      { "id": "d", "text": "The admins weren't trained well", "correct": false }
+    ],
+    "lesson": "Every privileged action must be attributable to a specific person. Shared accounts hide accountability and make it impossible to audit who did what.",
+    "pamControls": [
+      "Individual Privileged Accounts",
+      "Accountability",
+      "Audit Trails",
+      "Non-Repudiation"
+    ],
+    "relatedTerms": ["accountability", "security_audit_trail", "non_repudiation", "privileged_account"],
+    "roleLens": {
+      "admin": "Never share admin accounts.",
+      "ciso": "Shared accounts mean zero accountability.",
+      "auditor": "Require individual admin accounts.",
+      "helpdesk": "Each admin gets their own account.",
+      "business": "Who did what needs to be known."
+    }
+  },
+  {
+    "id": "scenario_010",
+    "title": "The Unencrypted Backup",
+    "category": "Data Protection",
+    "difficulty": "Beginner",
+    "scenario": "A company backed up their database to an external hard drive that was stored in an unlocked cabinet. The backup was unencrypted. A disgruntled employee took the drive home. Nobody noticed for a week. The backup contained 10 years of customer financial data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The backup wasn't physically secured", "correct": false },
+      { "id": "b", "text": "The backup wasn't encrypted and backup theft wasn't detected", "correct": true },
+      { "id": "c", "text": "The drive should have been destroyed monthly", "correct": false },
+      { "id": "d", "text": "The employee shouldn't have had access to the cabinet", "correct": false }
+    ],
+    "lesson": "Backups are copies of data. Treat them with the same security as the original. Encrypt backups. Monitor who accesses them. Track them.",
+    "pamControls": [
+      "Encryption of Sensitive Data",
+      "Backup Security",
+      "Data Loss Prevention",
+      "Access Audit Trails"
+    ],
+    "relatedTerms": ["encryption", "data_protection", "backup", "insider_threat"],
+    "roleLens": {
+      "admin": "Encrypt all backups.",
+      "ciso": "Backups are data. Protect them.",
+      "auditor": "Verify backup encryption and tracking.",
+      "helpdesk": "Report backup access to security.",
+      "business": "Backups are the crown jewels."
+    }
+  },
+  {
+    "id": "scenario_011",
+    "title": "The Certificate That Wasn't Rotated",
+    "category": "Credential Management",
+    "difficulty": "Intermediate",
+    "scenario": "An SSL certificate for a critical API was set to expire in 90 days. The cert management system sent reminders at 60 and 30 days. Nobody acted on them. On day 91, the certificate expired. The API became inaccessible. Renewal took 3 days. The organization lost millions in revenue.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The certificate reminder system wasn't working", "correct": false },
+      { "id": "b", "text": "Certificate rotation wasn't automated or closely monitored", "correct": true },
+      { "id": "c", "text": "The certificate key was too weak", "correct": false },
+      { "id": "d", "text": "The certificate was issued by an untrusted CA", "correct": false }
+    ],
+    "lesson": "Certificate management must be automated. Expiration is predictable. Set automatic renewal 30 days before expiry. Have alerts at 60, 30, 14, and 7 days.",
+    "pamControls": [
+      "Certificate Management",
+      "Automated Rotation",
+      "Key Management",
+      "Monitoring and Alerts"
+    ],
+    "relatedTerms": ["certificate_management", "key_management", "credential_rotation", "availability"],
+    "roleLens": {
+      "admin": "Automate certificate renewal.",
+      "ciso": "Certificate expiry is an availability risk.",
+      "auditor": "Require certificate automation.",
+      "helpdesk": "Never manually renew certificates.",
+      "business": "Expiration shouldn't cause outage."
+    }
+  },
+  {
+    "id": "scenario_012",
+    "title": "The No-Look Cloud Access",
+    "category": "Cloud Security",
+    "difficulty": "Intermediate",
+    "scenario": "An employee created a cloud storage account using their corporate email and uploaded sensitive documents 'for convenience.' The account had weak password, no MFA, and password recovery was set to their personal email. Nobody in IT knew it existed. An attacker guessed the password and accessed the account.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The employee shouldn't have used cloud storage", "correct": false },
+      { "id": "b", "text": "Cloud accounts weren't managed; account creation wasn't controlled", "correct": true },
+      { "id": "c", "text": "The corporate email didn't have enough security", "correct": false },
+      { "id": "d", "text": "The IT department should have trained the employee better", "correct": false }
+    ],
+    "lesson": "Shadow IT is a major risk. Organizations must discover, inventory, and control access to cloud services. Identity governance must span all cloud accounts.",
+    "pamControls": [
+      "Cloud Identity Management",
+      "SaaS Account Governance",
+      "Shadow IT Detection",
+      "Centralized Access Control"
+    ],
+    "relatedTerms": ["cloud_security", "identity_governance", "mfa", "access_control"],
+    "roleLens": {
+      "admin": "Inventory all cloud service accounts.",
+      "ciso": "Shadow IT is a compliance violation.",
+      "auditor": "Require approval for cloud accounts.",
+      "helpdesk": "Report personal cloud accounts.",
+      "business": "Unmanaged accounts are uncontrolled risk."
+    }
+  },
+  {
+    "id": "scenario_013",
+    "title": "The Contractor's Forever Access",
+    "category": "Access Control",
+    "difficulty": "Beginner",
+    "scenario": "A contractor finished their project and left the company. Their access was supposed to be removed, but the request got lost in email. Six months later, the contractor needed to access the company's systems for 'some old files.' Instead of requesting new access, they used their old credentials. They still worked. They had five months of unfettered access.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "Contractors shouldn't have high privilege", "correct": false },
+      { "id": "b", "text": "Offboarding process failed; access wasn't revoked", "correct": true },
+      { "id": "c", "text": "Contractors shouldn't be given any network access at all", "correct": false },
+      { "id": "d", "text": "The system should have been more secure", "correct": false }
+    ],
+    "lesson": "Offboarding is as critical as onboarding. When anyone leaves (employee or contractor), ALL access must be revoked immediately. Use automated workflows and verification. As a preventive control, contractor credentials should also be issued with automatic expiry dates tied to contract end — so that even if offboarding fails, access lapses automatically.",
+    "pamControls": [
+      "User Deprovisioning",
+      "Automated Offboarding",
+      "Access Verification",
+      "Credential Revocation"
+    ],
+    "relatedTerms": ["user_deprovisioning", "identity_governance", "access_deprovisioning", "least_privilege"],
+    "roleLens": {
+      "admin": "Offboard everyone completely.",
+      "ciso": "Failed offboarding means permanent backdoors.",
+      "auditor": "Verify all access removed on departure.",
+      "helpdesk": "Offboarding is a checklist.",
+      "business": "Contractors are temporary."
+    }
+  },
+  {
+    "id": "scenario_014",
+    "title": "The Supply Chain Compromise",
+    "category": "Third-Party Risk",
+    "difficulty": "Intermediate",
+    "scenario": "A company trusted a software vendor to provide a management tool. The vendor was compromised by attackers. The vendors' software was updated to include malware. Customers that installed the update became compromised. The company's infrastructure was breached before anyone realized the tool was malicious.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The software vendor had weak security", "correct": false },
+      { "id": "b", "text": "Third-party software wasn't verified or monitored before deployment", "correct": true },
+      { "id": "c", "text": "Antivirus didn't catch the malware", "correct": false },
+      { "id": "d", "text": "The company should have written their own tool", "correct": false }
+    ],
+    "lesson": "Trust vendors, but verify. Implement processes for evaluating vendor security before use. Monitor vendor updates. Have incident response plans for vendor compromise.",
+    "pamControls": [
+      "Vendor Risk Assessment",
+      "Software Verification",
+      "Update Management",
+      "Incident Response"
+    ],
+    "relatedTerms": ["supply_chain_risk", "third_party_risk", "vendor_management", "threat_intelligence"],
+    "roleLens": {
+      "admin": "Verify vendor software before deploying.",
+      "ciso": "Vendor risk is organizational risk.",
+      "auditor": "Require vendor security assessments.",
+      "helpdesk": "Report suspicious vendor updates.",
+      "business": "Trust, but verify."
+    }
+  },
+  {
+    "id": "scenario_015",
+    "title": "The API Key Hardcoded",
+    "category": "Credential Management",
+    "difficulty": "Intermediate",
+    "scenario": "A developer hardcoded an API key with full system access into the application code. The code was committed to a public GitHub repository. Attackers found the key using automated scanning tools. They used the key to access the company's entire API and exfiltrated customer data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "GitHub repository wasn't private", "correct": false },
+      { "id": "b", "text": "API credentials were hardcoded instead of using secure secret management", "correct": true },
+      { "id": "c", "text": "The API key had too many permissions", "correct": false },
+      { "id": "d", "text": "The developer wasn't trained on security", "correct": false }
+    ],
+    "lesson": "Secrets should never be committed to code repositories. Use environment variables or secret management systems. Scan repos for exposed credentials. Rotate any found.",
+    "pamControls": [
+      "Secret Management",
+      "Secret Scanning",
+      "Credential Rotation",
+      "Secret Vaults"
+    ],
+    "relatedTerms": ["secret_management", "credential_rotation", "api_security", "secure_development"],
+    "roleLens": {
+      "admin": "Never commit secrets to repos.",
+      "ciso": "Secret scanning should be automated.",
+      "auditor": "Verify no credentials in code repositories.",
+      "helpdesk": "Report found API keys immediately.",
+      "business": "Public code means public secrets."
+    }
+  },
+  {
+    "id": "scenario_016",
+    "title": "The Admin on Free WiFi",
+    "category": "Network Security",
+    "difficulty": "Beginner",
+    "scenario": "A system administrator was working from a coffee shop on unencrypted WiFi. An attacker on the same network intercepted network traffic. The admin was connecting to the company's network via VPN, but one application sent credentials in plaintext. The attacker captured the admin's database credentials.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The admin shouldn't work from coffee shops", "correct": false },
+      { "id": "b", "text": "Credentials were sent in plaintext over untrusted networks", "correct": true },
+      { "id": "c", "text": "The admin didn't use a VPN", "correct": false },
+      { "id": "d", "text": "The coffee shop WiFi was insecure", "correct": false }
+    ],
+    "lesson": "Never trust public networks. Use VPN for all connections. But even more important: all connections should use encryption. Never send credentials in plaintext, even over VPN.",
+    "pamControls": [
+      "Encryption in Transit",
+      "VPN Requirements",
+      "Credential Protection",
+      "Admin Workstation Security"
+    ],
+    "relatedTerms": ["encryption", "network_isolation", "admin_workstation", "credential_protection"],
+    "roleLens": {
+      "admin": "Encrypt all connections. Always.",
+      "ciso": "Require VPN and encryption.",
+      "auditor": "Verify plaintext forbidden in transit.",
+      "helpdesk": "Support secure remote work.",
+      "business": "Public networks are hostile."
+    }
+  },
+  {
+    "id": "scenario_017",
+    "title": "The One Honest Password",
+    "category": "Access Control",
+    "difficulty": "Intermediate",
+    "scenario": "A domain admin account was compromised through phishing. The attacker used it to create a backdoor admin account with a very similar name (ADMIN vs ADM1N). The new account went unnoticed for months. When discovered, the organization realized they had no audit trail of how it was created or what it had accessed.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "Admins fell for the phishing email", "correct": false },
+      { "id": "b", "text": "New privileged accounts and changes weren't detected or alerted", "correct": true },
+      { "id": "c", "text": "The similar account name should have been rejected", "correct": false },
+      { "id": "d", "text": "Passwords should have been stronger", "correct": false }
+    ],
+    "lesson": "Monitor for creation of new privileged accounts. Alert on account names similar to existing ones. Maintain complete audit trails of account modifications.",
+    "pamControls": [
+      "Account Creation Auditing",
+      "Anomaly Detection",
+      "Audit Trail Requirements",
+      "Real-Time Alerts"
+    ],
+    "relatedTerms": ["security_audit_trail", "continuous_monitoring", "anomaly_detection", "threat_detection"],
+    "roleLens": {
+      "admin": "Alert on new privileged accounts.",
+      "ciso": "Account creation is a security event.",
+      "auditor": "Require audit trails for account changes.",
+      "helpdesk": "Report suspicious new accounts.",
+      "business": "Backdoors start as backdoor accounts."
+    }
+  },
+  {
+    "id": "scenario_018",
+    "title": "The Forgotten SSH Key",
+    "category": "Credential Management",
+    "difficulty": "Intermediate",
+    "scenario": "A Linux admin generated an SSH key for a critical server 'for convenience.' The key was never rotated, never tracked in a key management system, and was copied to multiple workstations. Two years later, the admin left the company. The organization didn't even know the key existed, so they couldn't revoke it. The old admin still had persistent access.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "SSH shouldn't be used for access", "correct": false },
+      { "id": "b", "text": "SSH keys weren't tracked, rotated, or revoked on user exit", "correct": true },
+      { "id": "c", "text": "The key should have been longer", "correct": false },
+      { "id": "d", "text": "SSH keys should be generated by IT", "correct": false }
+    ],
+    "lesson": "All SSH keys must be tracked in a central management system. Keys should be rotated regularly. On user exit, all associated keys must be immediately revoked.",
+    "pamControls": [
+      "SSH Key Management",
+      "Credential Inventory",
+      "Credential Rotation",
+      "User Offboarding"
+    ],
+    "relatedTerms": ["credential_rotation", "key_management", "user_deprovisioning", "privilege_escalation"],
+    "roleLens": {
+      "admin": "Track every SSH key.",
+      "ciso": "SSH keys are standing privilege.",
+      "auditor": "Verify SSH key rotation.",
+      "helpdesk": "Revoke SSH keys on exit.",
+      "business": "Keys outlive employees."
+    }
+  },
+  {
+    "id": "scenario_019",
+    "title": "The Database Backup as a Playground",
+    "category": "Data Protection",
+    "difficulty": "Intermediate",
+    "scenario": "Developers requested a production database backup to test a new feature. They got full production data including millions of customer records. They stored the backup on an insecure dev server where it sat for six months. It was never deleted. A breach of the dev environment exposed the old production data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "Developers shouldn't have production data", "correct": false },
+      { "id": "b", "text": "Backups weren't encrypted, tracked, or deleted on schedule", "correct": true },
+      { "id": "c", "text": "The dev server should have been more secure", "correct": false },
+      { "id": "d", "text": "Developers should have been trained better", "correct": false }
+    ],
+    "lesson": "Production data must never be used directly in non-production environments. Use masked or anonymized data sets for development and testing — not encrypted copies of real data. When real data is absolutely necessary, apply strict controls: track who has it, set automatic deletion dates, and limit access to the minimum required scope.",
+    "pamControls": [
+      "Data Minimization",
+      "Backup Encryption",
+      "Data Retention Policies",
+      "Lifecycle Management"
+    ],
+    "relatedTerms": ["data_protection", "encryption", "backup", "data_loss_prevention"],
+    "roleLens": {
+      "admin": "Use anonymized data for testing.",
+      "ciso": "Backup is backup. Treat it like data.",
+      "auditor": "Require encryption of all backups.",
+      "helpdesk": "Verify backup retention policies.",
+      "business": "Old backups are still data."
+    }
+  },
+  {
+    "id": "scenario_020",
+    "title": "The Weak Service Account Password",
+    "category": "Credential Management",
+    "difficulty": "Beginner",
+    "scenario": "A service account had a policy-compliant password that was changed quarterly. But the password was derived from a predictable pattern (like 'Spring2023!', 'Summer2023!'). An attacker who got one password could predict future ones. They rotated through passwords and maintained access across quarters.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "Passwords were changed too frequently", "correct": false },
+      { "id": "b", "text": "Service account passwords weren't randomly generated", "correct": true },
+      { "id": "c", "text": "The password wasn't sent securely", "correct": false },
+      { "id": "d", "text": "The service account had too many permissions", "correct": false }
+    ],
+    "lesson": "All service account passwords and credentials must be randomly generated by a cryptographically secure generator. Predictable patterns are a security failure.",
+    "pamControls": [
+      "Credential Generation",
+      "Random Secret Generation",
+      "Credential Vault",
+      "No Predictable Patterns"
+    ],
+    "relatedTerms": ["password_vault", "credential_rotation", "service_account", "secret_management"],
+    "roleLens": {
+      "admin": "Use random, unique passwords.",
+      "ciso": "Require cryptographic randomness.",
+      "auditor": "Verify random credential generation.",
+      "helpdesk": "Never let humans choose service passwords.",
+      "business": "Predictable = compromised."
+    }
+  },
+  {
+    "id": "scenario_021",
+    "title": "The Shared Credentials Across Teams",
+    "category": "Access Control",
+    "difficulty": "Intermediate",
+    "scenario": "Multiple teams shared the same database credentials to 'simplify' database administration. When a team member left, nobody knew all the places that credential was used. It wasn't rotated. Months later, the former employee used it to access the database.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The database wasn't secured well enough", "correct": false },
+      { "id": "b", "text": "Shared credentials blocked accountability and weren't tracked for revocation", "correct": true },
+      { "id": "c", "text": "The credential wasn't encrypted", "correct": false },
+      { "id": "d", "text": "There were too many team members", "correct": false }
+    ],
+    "lesson": "Every credential should be associated with exactly one user or service. Shared credentials destroy accountability and make revocation impossible.",
+    "pamControls": [
+      "Individual Credentials",
+      "Credential Tracking",
+      "Revocation Processes",
+      "Accountability"
+    ],
+    "relatedTerms": ["accountability", "credential_rotation", "user_deprovisioning", "access_control"],
+    "roleLens": {
+      "admin": "Never share credentials.",
+      "ciso": "Shared credentials are audit failures.",
+      "auditor": "Require one user, one credential.",
+      "helpdesk": "Revoke personal credentials only.",
+      "business": "Accountability requires individual access."
+    }
+  },
+  {
+    "id": "scenario_022",
+    "title": "The Unmonitored API Access",
+    "category": "API Security",
+    "difficulty": "Intermediate",
+    "scenario": "An API was used by multiple integrations. It had authentication but no rate limiting and no usage monitoring. One integration's API key was compromised. The attacker used it to make millions of requests, extracting the entire database. The volume anomaly wasn't noticed for days.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The API shouldn't have been publicly available", "correct": false },
+      { "id": "b", "text": "API usage wasn't monitored or rate-limited; abnormal volume went undetected", "correct": true },
+      { "id": "c", "text": "The API key wasn't long enough", "correct": false },
+      { "id": "d", "text": "API authentication was too weak", "correct": false }
+    ],
+    "lesson": "Monitor all API usage. Enforce rate limits to cap the damage from any single compromised key. Alert on unusual patterns — millions of requests from one key is a detectable signal. Modern APIs require both rate limiting and continuous monitoring to catch and contain abuse.",
+    "pamControls": [
+      "API Monitoring",
+      "Rate Limiting",
+      "Anomaly Detection",
+      "Usage Alerts"
+    ],
+    "relatedTerms": ["api_security", "continuous_monitoring", "anomaly_detection", "threat_detection"],
+    "roleLens": {
+      "admin": "Monitor API usage continuously.",
+      "ciso": "Compromised API keys need fast detection.",
+      "auditor": "Require API usage logging.",
+      "helpdesk": "Report API usage spikes.",
+      "business": "APIs are access to data."
+    }
+  },
+  {
+    "id": "scenario_023",
+    "title": "The Certificate Chain Attack",
+    "category": "Public Key Infrastructure",
+    "difficulty": "Advanced",
+    "scenario": "An organization trusted a certificate from an intermediate CA. That intermediate CA was compromised. An attacker generated a fake certificate for the company's domain using the compromised CA. The organization's systems trusted it. The attacker intercepted traffic to their website.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The domain shouldn't have used HTTPS", "correct": false },
+      { "id": "b", "text": "Trust in the certificate chain was compromised but wasn't detected", "correct": true },
+      { "id": "c", "text": "The organization should have used a different CA", "correct": false },
+      { "id": "d", "text": "Certificates should have been longer", "correct": false }
+    ],
+    "lesson": "Monitor certificate chains for compromise indicators using Certificate Transparency (CT) logs — a public, append-only record of all issued certificates. Set up CT log monitoring to detect unauthorized certificates issued for your domains. Also configure DNS CAA records to restrict which certificate authorities are permitted to issue for your domain, blocking unauthorized issuance at the source.",
+    "pamControls": [
+      "Certificate Monitoring",
+      "Certificate Transparency Logs",
+      "DNS CAA Records",
+      "PKI Hardening"
+    ],
+    "relatedTerms": ["public_key_infrastructure", "certificate_management", "encryption", "security_audit_trail"],
+    "roleLens": {
+      "admin": "Monitor certificate chains.",
+      "ciso": "PKI compromise is a critical event.",
+      "auditor": "Require certificate chain validation.",
+      "helpdesk": "Report unexpected certificate warnings.",
+      "business": "Certificate trust is foundational."
+    }
+  },
+  {
+    "id": "scenario_024",
+    "title": "The Ransomware Payment Trap",
+    "category": "Incident Response",
+    "difficulty": "Advanced",
+    "scenario": "An organization was hit by ransomware. The attacker demanded $500K for decryption. The organization decided not to pay and instead restore from backups. But nobody had tested the backups. They couldn't restore anything. Weeks later, they were forced to pay double the original ransom for business files an attacker had stolen.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The organization shouldn't have used backups", "correct": false },
+      { "id": "b", "text": "Backups weren't tested and ransomware included data exfiltration threat", "correct": true },
+      { "id": "c", "text": "The organization should have paid immediately", "correct": false },
+      { "id": "d", "text": "Antivirus should have caught the ransomware", "correct": false }
+    ],
+    "lesson": "Test backups regularly. Assume ransomware includes data theft. Prepare incident response. Never assume paying buys silence. Have a real plan.",
+    "pamControls": [
+      "Backup Testing",
+      "Incident Response Plans",
+      "Ransomware Response",
+      "Data Exfiltration Prevention"
+    ],
+    "relatedTerms": ["ransomware", "backup", "incident_response", "data_loss_prevention"],
+    "roleLens": {
+      "admin": "Test backups. Often.",
+      "ciso": "Assume ransomware exfiltrates data.",
+      "auditor": "Require backup testing logs.",
+      "helpdesk": "Practice incident scenarios.",
+      "business": "Prepare for ransom. Hope not to pay."
+    }
+  },
+  {
+    "id": "scenario_025",
+    "title": "The LDAP Injection",
+    "category": "Application Security",
+    "difficulty": "Advanced",
+    "scenario": "An application allowed users to search for colleagues by name. The search box was vulnerable to LDAP injection. An attacker used LDAP injection to query the directory, extracting all user accounts including service accounts with their properties.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The application shouldn't query LDAP", "correct": false },
+      { "id": "b", "text": "User input wasn't properly sanitized for LDAP queries", "correct": true },
+      { "id": "c", "text": "LDAP directory shouldn't be exposed to applications", "correct": false },
+      { "id": "d", "text": "The application needed stronger authentication", "correct": false }
+    ],
+    "lesson": "All user input must be validated and sanitized for the context where it's used (LDAP, SQL, HTML, etc.). Never trust user input.",
+    "pamControls": [
+      "Input Validation",
+      "LDAP Injection Prevention",
+      "Secure Coding",
+      "Code Review"
+    ],
+    "relatedTerms": ["application_security", "secure_development", "code_review", "sql_injection"],
+    "roleLens": {
+      "admin": "Review application security code.",
+      "ciso": "LDAP injection exposes directory.",
+      "auditor": "Require secure coding standards.",
+      "helpdesk": "Report suspicious directory queries.",
+      "business": "Apps need input validation."
+    }
+  },
+  {
+    "id": "scenario_026",
+    "title": "The Privilege Escalation Nobody Audited",
+    "category": "Access Control",
+    "difficulty": "Intermediate",
+    "scenario": "A user's access was supposed to be read-only. A misconfiguration in the role template accidentally granted them write access. The user didn't notice and didn't ask. They used it by accident. Nobody audited permissions for eight months. During that time, the user accidentally deleted critical data.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The user should have been more careful", "correct": false },
+      { "id": "b", "text": "Permissions weren't regularly audited and accidental escalation went unnoticed", "correct": true },
+      { "id": "c", "text": "The application should have had better backups", "correct": false },
+      { "id": "d", "text": "Role templates shouldn't be used", "correct": false }
+    ],
+    "lesson": "Regularly audit all access rights. Compare current permissions to documented need. Catch misconfigurations before they cause damage.",
+    "pamControls": [
+      "Access Recertification",
+      "Periodic Audits",
+      "Misconfiguration Detection",
+      "Role Template Validation"
+    ],
+    "relatedTerms": ["access_recertification", "identity_governance", "least_privilege", "privilege_creep"],
+    "roleLens": {
+      "admin": "Audit permissions quarterly.",
+      "ciso": "Misconfiguration is a risk.",
+      "auditor": "Require regular access audits.",
+      "helpdesk": "Report permission anomalies.",
+      "business": "Accidents still cause damage."
+    }
+  },
+  {
+    "id": "scenario_027",
+    "title": "The Domain Admin Workstation Browser",
+    "category": "Admin Workstation",
+    "difficulty": "Intermediate",
+    "scenario": "A domain admin used their domain admin workstation to browse the internet. They visited a compromised website that served malware. The malware installed a keylogger. Every time they logged into systems as domain admin, the keylogger captured their credentials.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The website was malicious", "correct": false },
+      { "id": "b", "text": "Administrative workstations weren't segregated from user internet browsing", "correct": true },
+      { "id": "c", "text": "Antivirus didn't catch the malware", "correct": false },
+      { "id": "d", "text": "The admin should have used a VPN", "correct": false }
+    ],
+    "lesson": "Privileged access workstations must be dedicated to privileged work only. No internet browsing. No email. No multi-purpose use. Segregation saves your infrastructure.",
+    "pamControls": [
+      "Admin Workstation Security",
+      "Network Segregation",
+      "Tier Model",
+      "Privileged Access Workstations (PAW)"
+    ],
+    "relatedTerms": ["admin_workstation", "tier_model", "network_isolation", "endpoint_security"],
+    "roleLens": {
+      "admin": "Separate admin workstations. No internet.",
+      "ciso": "PAW is foundational security.",
+      "auditor": "Verify admin workstation isolation.",
+      "helpdesk": "Support PAW policies.",
+      "business": "Workstation separation protects admins."
+    }
+  },
+  {
+    "id": "scenario_028",
+    "title": "The Multi-Factor, Single Point of Failure",
+    "category": "Authentication",
+    "difficulty": "Advanced",
+    "scenario": "An organization required MFA on all privileged accounts. But they used a single MFA service provider. That provider had a security incident and issued temporary backup codes that were poorly randomized. Attackers guessed the backup codes and gained access to all privileged accounts.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "MFA shouldn't have been required", "correct": false },
+      { "id": "b", "text": "Backup codes weren't cryptographically random; single MFA provider was a single point of failure", "correct": true },
+      { "id": "c", "text": "The organization should have used different vendors", "correct": false },
+      { "id": "d", "text": "MFA codes should expire faster", "correct": false }
+    ],
+    "lesson": "Backup codes must be cryptographically random. Consider using multiple MFA methods or hardware keys. Single points of failure apply to security tools too.",
+    "pamControls": [
+      "MFA Backup Code Generation",
+      "Hardware Security Keys",
+      "Multiple MFA Methods",
+      "MFA Provider Diversity"
+    ],
+    "relatedTerms": ["mfa", "hardware_key", "passwordless_authentication", "cryptography"],
+    "roleLens": {
+      "admin": "Backup codes must be random.",
+      "ciso": "Don't let MFA be a single point of failure.",
+      "auditor": "Verify MFA backup processes.",
+      "helpdesk": "Use hardware keys where possible.",
+      "business": "MFA is only as good as its implementation."
+    }
+  },
+  {
+    "id": "scenario_029",
+    "title": "The OAuth2 Token Theft",
+    "category": "Authorization",
+    "difficulty": "Advanced",
+    "scenario": "An application used OAuth 2.0 for authentication. Access tokens were stored in browser local storage and never refreshed. An attacker performed an XSS attack, stole the token from local storage, and used it to access the user's data indefinitely.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "OAuth shouldn't have been used", "correct": false },
+      { "id": "b", "text": "OAuth tokens weren't refreshed and were stored insecurely", "correct": true },
+      { "id": "c", "text": "The application needed stronger encryption", "correct": false },
+      { "id": "d", "text": "Users shouldn't have authorized third-party apps", "correct": false }
+    ],
+    "lesson": "Never store tokens in browser localStorage — it is accessible to any JavaScript on the page and a primary XSS target. Access tokens should be short-lived to limit theft impact. Refresh tokens should be stored in httpOnly, Secure cookies (inaccessible to JavaScript) and rotated on each use so that stolen refresh tokens are detected. For sensitive applications, consider a Backend-for-Frontend (BFF) pattern where tokens never reach the browser at all. Monitor token usage for anomalies.",
+    "pamControls": [
+      "OAuth Token Lifecycle",
+      "Short-Lived Tokens",
+      "Secure Token Storage",
+      "Token Usage Monitoring"
+    ],
+    "relatedTerms": ["oauth", "authorization", "api_security", "application_security"],
+    "roleLens": {
+      "admin": "OAuth tokens need short lifetimes.",
+      "ciso": "Token theft is equivalent to breach.",
+      "auditor": "Verify token security practices.",
+      "helpdesk": "Report suspicious token usage.",
+      "business": "OAuth is convenient but requires care."
+    }
+  },
+  {
+    "id": "scenario_030",
+    "title": "The Database Admin Goes Rogue",
+    "category": "Insider Threat",
+    "difficulty": "Advanced",
+    "scenario": "A database admin with 10 years of service decided to steal data. Because they were trusted, there was minimal monitoring on their account. They downloaded 5 million customer records over a month and sold them on the dark web. By the time the company discovered the breach, the data was already sold multiple times.",
+    "question": "What went wrong?",
+    "answers": [
+      { "id": "a", "text": "The company hired the wrong person", "correct": false },
+      { "id": "b", "text": "High-trust, high-privilege accounts had no monitoring or anomaly detection", "correct": true },
+      { "id": "c", "text": "The data should have been encrypted", "correct": false },
+      { "id": "d", "text": "The company should have used read-only replicas", "correct": false }
+    ],
+    "lesson": "Trust is not a security control. Even trusted employees need monitoring, alerts on abnormal behavior, and data loss prevention. Insider threats are real and monitoring catches them.",
+    "pamControls": [
+      "Continuous Monitoring",
+      "Behavioral Analytics",
+      "Data Loss Prevention",
+      "Insider Threat Program",
+      "Session Recording"
+    ],
+    "relatedTerms": ["insider_threat", "continuous_monitoring", "behavioral_analytics", "data_loss_prevention"],
+    "roleLens": {
+      "admin": "Monitor even your most trusted admins.",
+      "ciso": "Insider threats are the hardest threat to stop.",
+      "auditor": "Require monitoring of all privileged access.",
+      "helpdesk": "Report unusual data access.",
+      "business": "Trust admins. Verify privileged access."
+    }
+  }
+]

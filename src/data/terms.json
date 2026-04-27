@@ -1,0 +1,2002 @@
+[
+  {
+    "id": "privileged_account",
+    "term": "Privileged Account",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An account with elevated permissions to perform administrative or sensitive operations beyond normal user access.",
+    "whyItMatters": "Privileged accounts are high-value targets for attackers. Compromise of a single privileged account can expose the entire infrastructure.",
+    "todaysTakeaway": "Not all admin accounts are created equal. Your database admin, domain admin, and cloud admin need different protections.",
+    "relatedTerms": ["standing_privilege", "least_privilege", "service_account", "service_principal"]
+  },
+  {
+    "id": "least_privilege",
+    "term": "Least Privilege",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The security principle of granting only the minimum permissions necessary to perform a specific role or task.",
+    "whyItMatters": "It limits lateral movement, reduces blast radius, and contains damage from both accidents and breaches.",
+    "todaysTakeaway": "Start with zero permissions and grant only what's needed. When in doubt, say no.",
+    "relatedTerms": ["privilege_escalation", "standing_privilege", "role_based_access_control"]
+  },
+  {
+    "id": "standing_privilege",
+    "term": "Standing Privilege",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Permanent, always-active elevated permissions held by a user or service continuously, regardless of current need.",
+    "whyItMatters": "It creates unnecessary risk. An account with standing privilege is a standing target.",
+    "todaysTakeaway": "Standing privilege is convenient. Attackers think so too.",
+    "relatedTerms": ["just_in_time_access", "privileged_account", "privilege_escalation"]
+  },
+  {
+    "id": "just_in_time_access",
+    "term": "Just-In-Time (JIT) Access",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Temporary elevation of privileges granted only when needed and for a limited duration, then automatically revoked.",
+    "whyItMatters": "Dramatically reduces the window of attack and the number of standing privileged accounts.",
+    "todaysTakeaway": "Time-limited access is the antidote to standing privilege.",
+    "relatedTerms": ["standing_privilege", "privilege_escalation", "privileged_session"]
+  },
+  {
+    "id": "privilege_escalation",
+    "term": "Privilege Escalation",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The act of gaining higher-level permissions than initially granted (vertical escalation), or accessing different accounts at the same privilege level (horizontal escalation), typically through misconfiguration, vulnerability, or unauthorized means.",
+    "whyItMatters": "Privilege escalation is a core phase in most attack chains — stopping it limits how far an attacker can move and what damage they can do.",
+    "todaysTakeaway": "Attackers start with low privilege. Your job is to make escalation as hard as possible.",
+    "relatedTerms": ["privilege_creep", "lateral_movement", "least_privilege"]
+  },
+  {
+    "id": "credential_stuffing",
+    "term": "Credential Stuffing",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Automated testing of leaked username/password pairs against multiple systems to gain unauthorized access.",
+    "whyItMatters": "People reuse passwords. One breach exposes credentials across all their accounts.",
+    "todaysTakeaway": "Assume your admin passwords are in a breach database. Use MFA.",
+    "relatedTerms": ["credential_compromise", "mfa", "password_vault"]
+  },
+  {
+    "id": "password_vault",
+    "term": "Password Vault",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A centralized, encrypted repository that stores and manages sensitive credentials, passwords, and authentication data.",
+    "whyItMatters": "A password vault is a start. It is not a PAM program.",
+    "todaysTakeaway": "Vaults store secrets. PAM controls how they're used.",
+    "relatedTerms": ["secret_management", "credential_compromise", "privileged_account"]
+  },
+  {
+    "id": "secret_management",
+    "term": "Secret Management",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Centralized control over the lifecycle of sensitive data—generation, storage, rotation, and retirement of credentials.",
+    "whyItMatters": "Without it, secrets are scattered, forgotten, and exposed.",
+    "todaysTakeaway": "A secret is only secure if you know where it lives and can change it instantly.",
+    "relatedTerms": ["password_vault", "credential_rotation", "zero_trust"]
+  },
+  {
+    "id": "lateral_movement",
+    "term": "Lateral Movement",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An attacker's technique of moving from an initially compromised system to other systems within the network.",
+    "whyItMatters": "Most breaches succeed not because initial access is hard, but because lateral movement is easy.",
+    "todaysTakeaway": "Assume your perimeter is compromised. Defend inside.",
+    "relatedTerms": ["privilege_escalation", "microsegmentation", "zero_trust"]
+  },
+  {
+    "id": "credential_compromise",
+    "term": "Credential Compromise",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The unauthorized disclosure, theft, or discovery of credentials that grant access to systems or data.",
+    "whyItMatters": "Compromised credentials are the fastest path to the crown jewels.",
+    "todaysTakeaway": "It's not if, but when. Plan for it.",
+    "relatedTerms": ["credential_stuffing", "password_vault", "mfa"]
+  },
+  {
+    "id": "mfa",
+    "term": "Multi-Factor Authentication (MFA)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A security mechanism requiring two or more verification methods (something you know, have, or are) to gain access.",
+    "whyItMatters": "It is the single most effective defense against credential compromise.",
+    "todaysTakeaway": "MFA on privileged accounts is mandatory, not optional.",
+    "relatedTerms": ["credential_compromise", "passwordless_authentication", "trust_but_verify"]
+  },
+  {
+    "id": "passwordless_authentication",
+    "term": "Passwordless Authentication",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Authentication methods that do not rely on passwords, such as biometrics, hardware keys, or cryptographic certificates.",
+    "whyItMatters": "Passwords are the weakest link. Passwordless removes them from the equation.",
+    "todaysTakeaway": "The best password is the one that never exists.",
+    "relatedTerms": ["mfa", "zero_trust", "identity_verification"]
+  },
+  {
+    "id": "service_account",
+    "term": "Service Account",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A non-human account used by applications, scripts, or automated processes to authenticate and perform actions.",
+    "whyItMatters": "Service accounts hold standing privilege but lack human oversight. They're prime targets.",
+    "todaysTakeaway": "Service accounts are invisible to most security teams but visible to attackers.",
+    "relatedTerms": ["service_principal", "machine_identity", "privileged_account"]
+  },
+  {
+    "id": "service_principal",
+    "term": "Service Principal",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A non-human identity used by applications, automated tools, and services to authenticate and access cloud resources, scoped to specific permissions within a cloud environment.",
+    "whyItMatters": "Cloud deployments can spawn hundreds of service principals. Most are undocumented, unmonitored, and exploitable.",
+    "todaysTakeaway": "You can't protect what you don't see. Inventory first.",
+    "relatedTerms": ["service_account", "machine_identity", "iam"]
+  },
+  {
+    "id": "machine_identity",
+    "term": "Machine Identity",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The digital identity of non-human entities (applications, containers, microservices) used for authentication and authorization.",
+    "whyItMatters": "Machine identities now vastly outnumber human ones in modern environments — securing them is one of the fastest-growing frontiers in PAM.",
+    "todaysTakeaway": "If you're not managing machine identities, you're not managing PAM.",
+    "relatedTerms": ["service_principal", "service_account", "zero_trust"]
+  },
+  {
+    "id": "role_based_access_control",
+    "term": "Role-Based Access Control (RBAC)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Access control model where permissions are assigned to roles, and users are granted roles rather than individual permissions.",
+    "whyItMatters": "It simplifies permission management and enables least privilege at scale.",
+    "todaysTakeaway": "Grant roles, not permissions. Revoke roles, not individual permissions.",
+    "relatedTerms": ["least_privilege", "attribute_based_access_control", "identity_governance"]
+  },
+  {
+    "id": "attribute_based_access_control",
+    "term": "Attribute-Based Access Control (ABAC)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Fine-grained access control model using attributes (user, resource, environment, context) to make access decisions.",
+    "whyItMatters": "It enables dynamic access policies based on real-time context, not static roles.",
+    "todaysTakeaway": "ABAC is RBAC on steroids.",
+    "relatedTerms": ["role_based_access_control", "zero_trust", "context_aware"]
+  },
+  {
+    "id": "trust_but_verify",
+    "term": "Trust But Verify",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "A legacy security principle that assumed entities inside the network perimeter could be trusted by default, with monitoring applied after access was granted.",
+    "whyItMatters": "Understanding this model matters because it is precisely what zero trust was designed to replace — implicit internal trust is a core reason breaches spread laterally.",
+    "todaysTakeaway": "Don't trust. Verify. Always.",
+    "relatedTerms": ["zero_trust", "continuous_monitoring", "security_audit_trail"]
+  },
+  {
+    "id": "zero_trust",
+    "term": "Zero Trust",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A security model that assumes no user or system is trustworthy by default and requires continuous verification.",
+    "whyItMatters": "It eliminates the perimeter. Every access, everywhere, must be verified.",
+    "todaysTakeaway": "The perimeter is dead. Assume breach. Verify everything.",
+    "relatedTerms": ["trust_but_verify", "continuous_monitoring", "microsegmentation"]
+  },
+  {
+    "id": "microsegmentation",
+    "term": "Microsegmentation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Network isolation strategy that divides infrastructure into granular security zones, each with its own access controls.",
+    "whyItMatters": "It stops lateral movement by making every jump require authentication and authorization.",
+    "todaysTakeaway": "Without it, one breach becomes an entire network compromise.",
+    "relatedTerms": ["lateral_movement", "zero_trust", "network_segmentation"]
+  },
+  {
+    "id": "continuous_monitoring",
+    "term": "Continuous Monitoring",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Real-time surveillance and analysis of user behavior, system activity, and security events to detect anomalies.",
+    "whyItMatters": "It detects insider threats, compromised accounts, and unauthorized actions in real-time.",
+    "todaysTakeaway": "If you're not watching, attackers are working.",
+    "relatedTerms": ["behavioral_analytics", "security_audit_trail", "siem"]
+  },
+  {
+    "id": "behavioral_analytics",
+    "term": "Behavioral Analytics",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Technique using machine learning to establish baseline user behavior and detect deviations indicating compromise or abuse.",
+    "whyItMatters": "It catches compromised accounts acting differently than their owners.",
+    "todaysTakeaway": "Patterns don't lie.",
+    "relatedTerms": ["continuous_monitoring", "anomaly_detection", "ueba"]
+  },
+  {
+    "id": "anomaly_detection",
+    "term": "Anomaly Detection",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Automated identification of unusual patterns or deviations from normal activity that may indicate a security incident.",
+    "whyItMatters": "Human analysts can't see everything. Algorithms can.",
+    "todaysTakeaway": "The abnormal always comes before the breach.",
+    "relatedTerms": ["behavioral_analytics", "continuous_monitoring", "threat_detection"]
+  },
+  {
+    "id": "ueba",
+    "term": "User and Entity Behavior Analytics (UEBA)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security technology that analyzes behavior patterns of users and non-human entities to identify insider threats and compromises.",
+    "whyItMatters": "It spots accounts acting like hackers even if credentials weren't stolen.",
+    "todaysTakeaway": "Know your baseline. Know when it breaks.",
+    "relatedTerms": ["behavioral_analytics", "continuous_monitoring", "insider_threat"]
+  },
+  {
+    "id": "insider_threat",
+    "term": "Insider Threat",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A security risk posed by authorized users who misuse their access to harm the organization or steal data.",
+    "whyItMatters": "Insiders have legitimate access. Their exploitation is harder to detect and punish.",
+    "todaysTakeaway": "Your biggest threat wears a badge.",
+    "relatedTerms": ["least_privilege", "continuous_monitoring", "ueba"]
+  },
+  {
+    "id": "security_audit_trail",
+    "term": "Security Audit Trail",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Complete log of all security-relevant events, access attempts, and actions for forensic analysis and compliance.",
+    "whyItMatters": "Without logs, you can't prove what happened, catch attackers, or defend against false accusations.",
+    "todaysTakeaway": "If it's not logged, it didn't happen.",
+    "relatedTerms": ["continuous_monitoring", "forensics", "compliance"]
+  },
+  {
+    "id": "forensics",
+    "term": "Forensics / Incident Forensics",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Post-incident investigation of logs, artifacts, and audit trails to understand the timeline, scope, and impact of a breach.",
+    "whyItMatters": "Good forensics turn a breach into a learning opportunity and evidence for legal action.",
+    "todaysTakeaway": "Investigation starts with logs. No logs, no investigation.",
+    "relatedTerms": ["security_audit_trail", "incident_response", "threat_intelligence"]
+  },
+  {
+    "id": "incident_response",
+    "term": "Incident Response",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Coordinated process of identifying, containing, eradicating, and recovering from a security breach or attack.",
+    "whyItMatters": "The first hour of an incident determines the damage. Preparation saves lives and money.",
+    "todaysTakeaway": "Have a plan before you need it.",
+    "relatedTerms": ["forensics", "crisis_management", "breach_response"]
+  },
+  {
+    "id": "compromise",
+    "term": "Compromise",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The act of an attacker gaining unauthorized access to or control over a system, account, or data.",
+    "whyItMatters": "Assume it happens. Build everything around assumption of compromise.",
+    "todaysTakeaway": "Assume breach.",
+    "relatedTerms": ["breach", "zero_trust", "incident_response"]
+  },
+  {
+    "id": "breach",
+    "term": "Breach",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Unauthorized access to, exposure of, or exfiltration of sensitive data or systems, typically discovered after the fact.",
+    "whyItMatters": "It's not if, but when. Your security spend should reflect that.",
+    "todaysTakeaway": "Preparation is the best defense.",
+    "relatedTerms": ["compromise", "incident_response", "data_loss_prevention"]
+  },
+  {
+    "id": "data_loss_prevention",
+    "term": "Data Loss Prevention (DLP)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security technology and processes that prevent unauthorized transmission, copying, or exfiltration of sensitive data.",
+    "whyItMatters": "Without it, every privileged user is one rogue act away from selling the crown jewels.",
+    "todaysTakeaway": "Control the exit door.",
+    "relatedTerms": ["least_privilege", "continuous_monitoring", "privileged_session"]
+  },
+  {
+    "id": "privileged_session",
+    "term": "Privileged Session",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An interactive or automated access window during which a user or process operates under elevated permissions, subject to monitoring, recording, and audit.",
+    "whyItMatters": "Monitoring and recording privileged sessions creates accountability and provides forensic evidence if an account is abused or compromised.",
+    "todaysTakeaway": "Grant access. Record everything. Revoke on exit.",
+    "relatedTerms": ["just_in_time_access", "continuous_monitoring", "session_recording"]
+  },
+  {
+    "id": "session_recording",
+    "term": "Session Recording / Screen Recording",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Capture and playback of privileged user activities (keyboard, mouse, screen) for compliance, forensics, and accountability.",
+    "whyItMatters": "Knowing they're watched changes behavior. And if they're not, you'll see it.",
+    "todaysTakeaway": "Record everything. Play it back when it matters.",
+    "relatedTerms": ["privileged_session", "continuous_monitoring", "accountability"]
+  },
+  {
+    "id": "accountability",
+    "term": "Accountability",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security and governance principle ensuring that every privileged action can be attributed to a specific user or system.",
+    "whyItMatters": "Without accountability, nothing stops anyone from doing anything.",
+    "todaysTakeaway": "Trust admins. Verify privileged access.",
+    "relatedTerms": ["security_audit_trail", "session_recording", "non_repudiation"]
+  },
+  {
+    "id": "non_repudiation",
+    "term": "Non-Repudiation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security principle ensuring that a party cannot deny having performed an action or sent a message.",
+    "whyItMatters": "It prevents the 'I didn't do that' defense.",
+    "todaysTakeaway": "Proof beats claims.",
+    "relatedTerms": ["accountability", "digital_signature", "security_audit_trail"]
+  },
+  {
+    "id": "digital_signature",
+    "term": "Digital Signature",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Cryptographic proof of identity and integrity, verifying that a message or transaction came from a specific sender and hasn't been altered.",
+    "whyItMatters": "It proves who signed what and that nothing was changed.",
+    "todaysTakeaway": "Signatures prove authenticity.",
+    "relatedTerms": ["non_repudiation", "public_key_infrastructure", "encryption"]
+  },
+  {
+    "id": "public_key_infrastructure",
+    "term": "Public Key Infrastructure (PKI)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A framework of policies, processes, and technologies — including digital certificates and cryptographic key pairs — used to issue, manage, and revoke identities and enable secure, trusted communications.",
+    "whyItMatters": "PKI is the foundation of trust for privileged communications.",
+    "todaysTakeaway": "It's complicated. That's the point.",
+    "relatedTerms": ["digital_signature", "encryption", "certificate_authority"]
+  },
+  {
+    "id": "encryption",
+    "term": "Encryption",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Process of converting readable data into unreadable ciphertext using mathematical algorithms, readable only by authorized parties with the key.",
+    "whyItMatters": "Without it, stolen data is readable data.",
+    "todaysTakeaway": "Encrypt data at rest. Encrypt data in transit. Encrypt sensitive backups.",
+    "relatedTerms": ["key_management", "secret_management", "zero_trust"]
+  },
+  {
+    "id": "key_management",
+    "term": "Key Management",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Centralized governance of the generation, storage, rotation, and retirement of encryption keys.",
+    "whyItMatters": "Keys are secrets. Compromised keys mean compromised encryption.",
+    "todaysTakeaway": "Your encryption is only as good as your key management.",
+    "relatedTerms": ["encryption", "secret_management", "credential_rotation"]
+  },
+  {
+    "id": "credential_rotation",
+    "term": "Credential Rotation",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Regular, automated change of passwords, keys, and authentication credentials to limit exposure window if compromised.",
+    "whyItMatters": "It reduces the value of stolen credentials and forces regular verification that systems still work.",
+    "todaysTakeaway": "Change it. Track the change. Do it again.",
+    "relatedTerms": ["secret_management", "key_management", "password_policy"]
+  },
+  {
+    "id": "password_policy",
+    "term": "Password Policy",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Set of rules governing password complexity, length, age, reuse history, and enforcement for user accounts.",
+    "whyItMatters": "Weak password policies undermine every other control built on top of them — strong policies are a foundational layer, not a fallback.",
+    "todaysTakeaway": "Long beats complex. Randomized beats memorable.",
+    "relatedTerms": ["credential_rotation", "passwordless_authentication", "mfa"]
+  },
+  {
+    "id": "access_control_list",
+    "term": "Access Control List (ACL)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Explicit list of permissions defining which users or systems can access a specific resource and what actions they can perform.",
+    "whyItMatters": "It's the basic building block of access control. Get it wrong, everything fails.",
+    "todaysTakeaway": "ACLs are the rules. Enforce them everywhere.",
+    "relatedTerms": ["least_privilege", "role_based_access_control", "access_policy"]
+  },
+  {
+    "id": "access_policy",
+    "term": "Access Policy",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Documented rules and standards defining who can access what resources, under what conditions, and with what limitations.",
+    "whyItMatters": "Without documented policy, access is chaotic and unenforceable.",
+    "todaysTakeaway": "If it's not written down, it's not a policy.",
+    "relatedTerms": ["access_control_list", "compliance", "governance"]
+  },
+  {
+    "id": "approval_workflow",
+    "term": "Approval Workflow",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process requiring authorization from one or more designated approvers before granting elevated access or sensitive actions.",
+    "whyItMatters": "It prevents impulsive privilege grants and adds a human checkpoint.",
+    "todaysTakeaway": "One person shouldn't be able to grant themselves access.",
+    "relatedTerms": ["least_privilege", "segregation_of_duties", "access_policy"]
+  },
+  {
+    "id": "segregation_of_duties",
+    "term": "Segregation of Duties (SoD)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security principle requiring that critical actions be split across multiple people or roles to prevent fraud or unilateral abuse.",
+    "whyItMatters": "One person shouldn't be able to authorize, execute, and approve their own transaction.",
+    "todaysTakeaway": "Power corrupts. Distribute it.",
+    "relatedTerms": ["least_privilege", "approval_workflow", "compliance"]
+  },
+  {
+    "id": "identity_governance",
+    "term": "Identity Governance",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The discipline of managing digital identity lifecycles, access entitlements, and policy compliance across the organization — including provisioning, access reviews, and certification of who has access to what.",
+    "whyItMatters": "Without it, access accumulates unchecked: people leave roles but keep permissions, creating a growing pool of exploitable over-privileged accounts.",
+    "todaysTakeaway": "Start with identity. Everything else follows.",
+    "relatedTerms": ["identity_and_access_management", "access_recertification", "user_provisioning"]
+  },
+  {
+    "id": "identity_and_access_management",
+    "term": "Identity and Access Management (IAM)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Technology and processes for managing digital identities and controlling access to resources based on those identities.",
+    "whyItMatters": "IAM is the foundation. PAM is IAM focused on privileged identities.",
+    "todaysTakeaway": "Fix IAM first. Then focus on PAM.",
+    "relatedTerms": ["identity_governance", "privileged_account", "access_control"]
+  },
+  {
+    "id": "access_recertification",
+    "term": "Access Recertification / Access Review",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Periodic process where managers or owners verify that existing access rights are still appropriate and necessary.",
+    "whyItMatters": "People accumulate access like dust. Recertification cleans it out.",
+    "todaysTakeaway": "Review it. Trust doesn't sustain access forever.",
+    "relatedTerms": ["privilege_creep", "access_deprovisioning", "identity_governance"]
+  },
+  {
+    "id": "privilege_creep",
+    "term": "Privilege Creep",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Unintended accumulation of excess permissions as users change roles, get promoted, or switch teams without having old access removed.",
+    "whyItMatters": "It's the path of least resistance and greatest risk.",
+    "todaysTakeaway": "People grow permissions like weeds. Prune them.",
+    "relatedTerms": ["least_privilege", "access_recertification", "access_deprovisioning"]
+  },
+  {
+    "id": "user_provisioning",
+    "term": "User Provisioning",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Automated or manual process of creating user accounts and assigning initial access rights when users join the organization.",
+    "whyItMatters": "Clean provisioning prevents common onboarding mistakes.",
+    "todaysTakeaway": "First access should be least access.",
+    "relatedTerms": ["user_deprovisioning", "identity_governance", "access_control"]
+  },
+  {
+    "id": "user_deprovisioning",
+    "term": "User Deprovisioning / Offboarding",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of removing a user's access, credentials, and accounts when they leave the organization or change roles.",
+    "whyItMatters": "Former employees with active access are a permanent backdoor.",
+    "todaysTakeaway": "When someone leaves, their access should too.",
+    "relatedTerms": ["user_provisioning", "access_deprovisioning", "identity_governance"]
+  },
+  {
+    "id": "access_deprovisioning",
+    "term": "Access Deprovisioning",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Removal or revocation of specific permissions when they're no longer needed or when a user transitions roles.",
+    "whyItMatters": "Allows privilege creep to be reversed.",
+    "todaysTakeaway": "Remove what's not needed.",
+    "relatedTerms": ["user_deprovisioning", "least_privilege", "access_recertification"]
+  },
+  {
+    "id": "certificate_authority",
+    "term": "Certificate Authority (CA)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Trusted entity that issues, manages, and revokes digital certificates used to verify identities in PKI.",
+    "whyItMatters": "CAs are trust anchors. Compromise a CA, you compromise everything it signed.",
+    "todaysTakeaway": "Guard your CA like it's the crown jewels.",
+    "relatedTerms": ["public_key_infrastructure", "digital_signature", "certificate_management"]
+  },
+  {
+    "id": "certificate_management",
+    "term": "Certificate Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Lifecycle management of digital certificates including issuance, renewal, rotation, and revocation.",
+    "whyItMatters": "Expired or misconfigured certificates break systems and create security gaps.",
+    "todaysTakeaway": "Automate it. Don't let it surprise you.",
+    "relatedTerms": ["certificate_authority", "public_key_infrastructure", "key_management"]
+  },
+  {
+    "id": "ldap",
+    "term": "LDAP (Lightweight Directory Access Protocol)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Standard protocol for accessing and managing centralized directory services that store user identities and attributes.",
+    "whyItMatters": "Most enterprises use LDAP (often Active Directory). Understanding it is critical.",
+    "todaysTakeaway": "LDAP is the open protocol most directory services use to store and retrieve identity information — not just Windows.",
+    "relatedTerms": ["active_directory", "identity_directory", "iam"]
+  },
+  {
+    "id": "active_directory",
+    "term": "Active Directory (AD)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Microsoft's enterprise directory service that stores and manages Windows domain identities, groups, and access policies.",
+    "whyItMatters": "AD is the keys to the Windows kingdom. Compromise AD, you compromise everything.",
+    "todaysTakeaway": "If you're not protecting AD, you're not protecting anything.",
+    "relatedTerms": ["ldap", "privileged_account", "domain_admin"]
+  },
+  {
+    "id": "domain_admin",
+    "term": "Domain Admin",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Most privileged account in an Active Directory domain, with unrestricted access to all domain-joined systems and data.",
+    "whyItMatters": "Domain Admins are the keys to the kingdom. Compromise one, the whole domain falls.",
+    "todaysTakeaway": "Domain Admins need PAM protection more than anything else.",
+    "relatedTerms": ["active_directory", "privileged_account", "standing_privilege"]
+  },
+  {
+    "id": "enterprise_admin",
+    "term": "Enterprise Admin",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An account with permissions spanning all domains in an Active Directory forest, able to make forest-wide configuration changes such as adding domains and establishing forest trusts.",
+    "whyItMatters": "Enterprise Admins can change the rules of the entire directory.",
+    "todaysTakeaway": "This account should barely exist and never be used.",
+    "relatedTerms": ["domain_admin", "active_directory", "forest_root"]
+  },
+  {
+    "id": "forest_root",
+    "term": "Forest Root / AD Forest",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The first domain created in an Active Directory forest, which hosts forest-wide privileged groups such as Enterprise Admins and Schema Admins.",
+    "whyItMatters": "Compromising the forest root grants forest-wide administrative control — it is the highest-value target in an Active Directory environment.",
+    "todaysTakeaway": "The root is sacred.",
+    "relatedTerms": ["active_directory", "enterprise_admin", "tier_model"]
+  },
+  {
+    "id": "tier_model",
+    "term": "Tier Model / Administrative Tier Model",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Architectural framework that segregates administrative access into tiers based on what is managed: Tier 0 (identity systems and domain controllers), Tier 1 (enterprise servers and applications), and Tier 2 (user workstations), with strict logon restrictions preventing credential flow downward.",
+    "whyItMatters": "It prevents compromise at one tier from cascading to higher tiers.",
+    "todaysTakeaway": "Build your security around a tier model.",
+    "relatedTerms": ["admin_workstation", "forest_root", "zero_trust"]
+  },
+  {
+    "id": "admin_workstation",
+    "term": "Admin Workstation / PAW (Privileged Access Workstation)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Hardened, dedicated computer used only for administrative tasks, isolated from general user network traffic.",
+    "whyItMatters": "Admins need safe places to work. This is it.",
+    "todaysTakeaway": "Never admin from your laptop.",
+    "relatedTerms": ["tier_model", "privileged_access", "network_isolation"]
+  },
+  {
+    "id": "network_isolation",
+    "term": "Network Isolation / Air Gap",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Physical or logical separation of networks to prevent direct communication and lateral movement.",
+    "whyItMatters": "It's hard to compromise systems you can't reach.",
+    "todaysTakeaway": "Separate networks. Separate permissions. Separate risk.",
+    "relatedTerms": ["microsegmentation", "admin_workstation", "zero_trust"]
+  },
+  {
+    "id": "denial_of_service",
+    "term": "Denial of Service (DoS) / Distributed Denial of Service (DDoS)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "An attack that prevents legitimate users from accessing systems or resources by exhausting capacity, exploiting vulnerabilities, or flooding with requests.",
+    "whyItMatters": "DoS can be used to distract from or enable other attacks.",
+    "todaysTakeaway": "Availability is part of security.",
+    "relatedTerms": ["threat_management", "incident_response", "network_defense"]
+  },
+  {
+    "id": "threat_management",
+    "term": "Threat Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Proactive identification, assessment, and mitigation of potential security threats and vulnerabilities.",
+    "whyItMatters": "It shifts security from reactive to proactive.",
+    "todaysTakeaway": "Know the threats. Plan the defense.",
+    "relatedTerms": ["threat_intelligence", "risk_assessment", "vulnerability_management"]
+  },
+  {
+    "id": "threat_intelligence",
+    "term": "Threat Intelligence",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Information about current attacks, attacker tactics, and emerging threats used to inform security strategies.",
+    "whyItMatters": "It keeps you ahead of actual threats, not hypothetical ones.",
+    "todaysTakeaway": "Know what's actually happening out there.",
+    "relatedTerms": ["threat_management", "vulnerability_management", "risk_assessment"]
+  },
+  {
+    "id": "vulnerability_management",
+    "term": "Vulnerability Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of identifying, prioritizing, and remediating software, configuration, and design flaws that attackers can exploit.",
+    "whyItMatters": "Unpatched vulnerabilities are open doors.",
+    "todaysTakeaway": "Patch fast. Prioritize privilege paths.",
+    "relatedTerms": ["patch_management", "threat_intelligence", "security_assessment"]
+  },
+  {
+    "id": "patch_management",
+    "term": "Patch Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of regularly updating software and systems with security fixes and patches to address known vulnerabilities.",
+    "whyItMatters": "Unpatched systems are compromise waiting to happen.",
+    "todaysTakeaway": "Patch everything. Test first. Patch anyway.",
+    "relatedTerms": ["vulnerability_management", "change_management", "risk_mitigation"]
+  },
+  {
+    "id": "change_management",
+    "term": "Change Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Formal process for planning, testing, approving, and deploying changes to systems to minimize disruption and risk.",
+    "whyItMatters": "Many breaches happen during changes when no one's watching.",
+    "todaysTakeaway": "Change with control. Or change with consequences.",
+    "relatedTerms": ["patch_management", "governance", "approval_workflow"]
+  },
+  {
+    "id": "security_assessment",
+    "term": "Security Assessment / Penetration Testing",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Authorized evaluation of systems and networks to identify vulnerabilities, weaknesses, and areas of risk.",
+    "whyItMatters": "You can't fix what you don't know is broken.",
+    "todaysTakeaway": "Get tested. Listen to the results.",
+    "relatedTerms": ["vulnerability_management", "risk_assessment", "compliance"]
+  },
+  {
+    "id": "risk_assessment",
+    "term": "Risk Assessment",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Systematic process of identifying potential threats, their likelihood, and impact to prioritize security investments.",
+    "whyItMatters": "Security budgets are finite. Risk assessment guides smart spending.",
+    "todaysTakeaway": "Risk drives investment.",
+    "relatedTerms": ["threat_management", "security_assessment", "governance"]
+  },
+  {
+    "id": "risk_mitigation",
+    "term": "Risk Mitigation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Actions taken to reduce the likelihood or impact of identified risks.",
+    "whyItMatters": "Knowing risks is half the battle. Fixing them is the other half.",
+    "todaysTakeaway": "Identify risk. Reduce risk. Repeat.",
+    "relatedTerms": ["risk_assessment", "patch_management", "incident_response"]
+  },
+  {
+    "id": "governance",
+    "term": "Governance",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Framework of policies, processes, and oversight ensuring organizations operate securely and in compliance with standards.",
+    "whyItMatters": "Without governance, security becomes sporadic and unenforceable.",
+    "todaysTakeaway": "Policy without enforcement is just suggestions.",
+    "relatedTerms": ["compliance", "policy", "access_policy"]
+  },
+  {
+    "id": "compliance",
+    "term": "Compliance",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Adherence to external regulations, standards, and internal policies that govern security, privacy, and operations.",
+    "whyItMatters": "Compliance isn't security, but it enforces good security practices.",
+    "todaysTakeaway": "Compliance is the floor. Security is your goal.",
+    "relatedTerms": ["governance", "auditing", "regulatory_requirement"]
+  },
+  {
+    "id": "auditing",
+    "term": "Auditing / Internal Audit",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Independent review of systems, processes, and controls to verify compliance with policies and standards.",
+    "whyItMatters": "Audits catch problems before they become breaches.",
+    "todaysTakeaway": "Get audited. Listen to auditors.",
+    "relatedTerms": ["compliance", "governance", "security_audit_trail"]
+  },
+  {
+    "id": "regulatory_requirement",
+    "term": "Regulatory Requirement / Compliance Requirement",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "External legal or industry standard mandate that organizations must follow.",
+    "whyItMatters": "Some compliance is mandatory. Failing it has consequences.",
+    "todaysTakeaway": "Know your regs.",
+    "relatedTerms": ["compliance", "governance", "auditing"]
+  },
+  {
+    "id": "gdpr",
+    "term": "GDPR (General Data Protection Regulation)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "European Union regulation governing privacy and personal data protection for EU residents.",
+    "whyItMatters": "It applies globally if you touch EU data. And the fines are huge.",
+    "todaysTakeaway": "Privacy is compliance.",
+    "relatedTerms": ["privacy", "data_protection", "compliance"]
+  },
+  {
+    "id": "hipaa",
+    "term": "HIPAA (Health Insurance Portability and Accountability Act)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "US regulation protecting the privacy and security of health information.",
+    "whyItMatters": "Healthcare data breaches carry massive penalties and legal liability.",
+    "todaysTakeaway": "Healthcare means HIPAA.",
+    "relatedTerms": ["compliance", "privacy", "data_protection"]
+  },
+  {
+    "id": "pci_dss",
+    "term": "PCI DSS (Payment Card Industry Data Security Standard)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Industry standard for securing payment card data and cardholder information.",
+    "whyItMatters": "If you process cards, you must comply or face payment processor termination.",
+    "todaysTakeaway": "Cards mean PCI DSS.",
+    "relatedTerms": ["compliance", "data_protection", "encryption"]
+  },
+  {
+    "id": "sox",
+    "term": "SOX (Sarbanes-Oxley Act)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "US legislation requiring public companies to maintain accurate financial records with strong internal controls and auditing.",
+    "whyItMatters": "Public companies must comply or face executive prosecution.",
+    "todaysTakeaway": "Public companies need PAM.",
+    "relatedTerms": ["compliance", "governance", "auditing"]
+  },
+  {
+    "id": "iso_27001",
+    "term": "ISO 27001",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "International standard for information security management systems.",
+    "whyItMatters": "It's a framework. Following it demonstrates commitment to security.",
+    "todaysTakeaway": "ISO gives you a roadmap.",
+    "relatedTerms": ["compliance", "governance", "information_security"]
+  },
+  {
+    "id": "information_security",
+    "term": "Information Security",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Protection of data and systems from unauthorized access, use, disclosure, disruption, modification, or destruction.",
+    "whyItMatters": "It's the umbrella that covers PAM, network security, and everything else.",
+    "todaysTakeaway": "Security starts with information.",
+    "relatedTerms": ["confidentiality", "integrity", "availability"]
+  },
+  {
+    "id": "confidentiality",
+    "term": "Confidentiality",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security principle ensuring that sensitive data is accessible only to authorized parties.",
+    "whyItMatters": "Breaches of confidentiality expose secrets.",
+    "todaysTakeaway": "Keep secrets secret.",
+    "relatedTerms": ["information_security", "integrity", "encryption"]
+  },
+  {
+    "id": "integrity",
+    "term": "Integrity",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security principle ensuring that data is accurate, complete, and has not been altered by unauthorized parties.",
+    "whyItMatters": "False or altered data is worse than no data.",
+    "todaysTakeaway": "Data must be what it says it is.",
+    "relatedTerms": ["information_security", "confidentiality", "availability"]
+  },
+  {
+    "id": "availability",
+    "term": "Availability",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security principle ensuring that systems and data are accessible to authorized users when needed.",
+    "whyItMatters": "Secure but unavailable systems fail their purpose.",
+    "todaysTakeaway": "Security and uptime are partners.",
+    "relatedTerms": ["information_security", "confidentiality", "integrity"]
+  },
+  {
+    "id": "cia_triad",
+    "term": "CIA Triad (Confidentiality, Integrity, Availability)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Foundational security framework balancing three principles: keeping data secret, accurate, and accessible.",
+    "whyItMatters": "Every security decision is a trade-off between these three.",
+    "todaysTakeaway": "Balance all three. Neglect one, and everything fails.",
+    "relatedTerms": ["confidentiality", "integrity", "availability"]
+  },
+  {
+    "id": "privacy",
+    "term": "Privacy",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Right of individuals to control their personal data and have it protected from misuse.",
+    "whyItMatters": "Privacy breaches destroy trust and violate regulations.",
+    "todaysTakeaway": "Privacy is a right. Protect it.",
+    "relatedTerms": ["confidentiality", "gdpr", "data_protection"]
+  },
+  {
+    "id": "data_protection",
+    "term": "Data Protection",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Comprehensive approach to safeguarding data through technical, administrative, and physical controls.",
+    "whyItMatters": "Data is the target. Protect it everywhere.",
+    "todaysTakeaway": "Protect data where it lives, where it moves, and where it's stored.",
+    "relatedTerms": ["encryption", "backup", "privacy"]
+  },
+  {
+    "id": "backup",
+    "term": "Backup / Disaster Recovery",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of copying data to a separate location so it can be restored in case of loss, corruption, or disaster.",
+    "whyItMatters": "Backups are your safety net. But they're only useful if they're separate from your main systems.",
+    "todaysTakeaway": "Test your backups before you need them.",
+    "relatedTerms": ["disaster_recovery", "business_continuity", "availability"]
+  },
+  {
+    "id": "disaster_recovery",
+    "term": "Disaster Recovery",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Plan and procedures for restoring systems and data after a major failure or attack.",
+    "whyItMatters": "Having a plan means recovering in hours instead of days.",
+    "todaysTakeaway": "Plan for the worst. Hope for the best.",
+    "relatedTerms": ["backup", "business_continuity", "incident_response"]
+  },
+  {
+    "id": "business_continuity",
+    "term": "Business Continuity",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Capability of an organization to continue operations during and after a disruptive incident.",
+    "whyItMatters": "Downtime costs money. Lots of it.",
+    "todaysTakeaway": "Keep the business running during a disruption — don't just plan to recover after one.",
+    "relatedTerms": ["disaster_recovery", "incident_response", "availability"]
+  },
+  {
+    "id": "rto",
+    "term": "RTO (Recovery Time Objective)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Target maximum time a system must be back online after a failure.",
+    "whyItMatters": "RTO defines the maximum tolerable downtime — it determines how quickly systems must be restored to avoid unacceptable business impact.",
+    "todaysTakeaway": "Know your RTO. Build for it.",
+    "relatedTerms": ["rpo", "business_continuity", "disaster_recovery"]
+  },
+  {
+    "id": "rpo",
+    "term": "RPO (Recovery Point Objective)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Target maximum amount of data loss acceptable in case of failure.",
+    "whyItMatters": "RPO determines how much data loss is tolerable, which drives decisions about backup frequency, replication, and data protection architecture.",
+    "todaysTakeaway": "Know your RPO. Back up accordingly.",
+    "relatedTerms": ["rto", "backup", "disaster_recovery"]
+  },
+  {
+    "id": "siem",
+    "term": "SIEM (Security Information and Event Management)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Centralized platform that collects, analyzes, and correlates security logs from across the organization to detect threats.",
+    "whyItMatters": "Without a SIEM, you're flying blind. Logs scattered across systems are useless.",
+    "todaysTakeaway": "Collect logs. Analyze them. Alert on anomalies.",
+    "relatedTerms": ["continuous_monitoring", "security_audit_trail", "behavioral_analytics"]
+  },
+  {
+    "id": "edr",
+    "term": "EDR (Endpoint Detection and Response)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security technology installed on endpoints that monitors for suspicious activity and enables rapid response.",
+    "whyItMatters": "EDR catches attackers mid-attack on workstations and servers.",
+    "todaysTakeaway": "Endpoints are battlegrounds. Monitor them.",
+    "relatedTerms": ["continuous_monitoring", "threat_detection", "incident_response"]
+  },
+  {
+    "id": "threat_detection",
+    "term": "Threat Detection",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of identifying and alerting on suspicious activity, attack patterns, or indicators of compromise.",
+    "whyItMatters": "Detection is the first step to stopping attacks.",
+    "todaysTakeaway": "Detect fast. Respond faster.",
+    "relatedTerms": ["continuous_monitoring", "edr", "siem"]
+  },
+  {
+    "id": "network_segmentation",
+    "term": "Network Segmentation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Division of a network into separate zones with controlled communication between them.",
+    "whyItMatters": "It limits lateral movement and contains breaches.",
+    "todaysTakeaway": "Segment. Monitor the boundaries.",
+    "relatedTerms": ["microsegmentation", "zero_trust", "network_isolation"]
+  },
+  {
+    "id": "firewall",
+    "term": "Firewall",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security device or software that controls inbound and outbound network traffic based on defined rules.",
+    "whyItMatters": "Firewalls are the first line of defense.",
+    "todaysTakeaway": "Default deny. Allow only what's needed.",
+    "relatedTerms": ["network_segmentation", "network_defense", "access_control"]
+  },
+  {
+    "id": "network_defense",
+    "term": "Network Defense",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security strategies and technologies protecting networks from unauthorized access, attacks, and intrusions.",
+    "whyItMatters": "Networks are highways for attackers. Defend them.",
+    "todaysTakeaway": "Defense in depth. Layers matter.",
+    "relatedTerms": ["firewall", "network_segmentation", "intrusion_detection"]
+  },
+  {
+    "id": "intrusion_detection",
+    "term": "Intrusion Detection System (IDS)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security system that monitors network traffic for suspicious patterns or known attack signatures.",
+    "whyItMatters": "IDS catches attacks in transit.",
+    "todaysTakeaway": "Detect intrusions early.",
+    "relatedTerms": ["intrusion_prevention", "threat_detection", "network_defense"]
+  },
+  {
+    "id": "intrusion_prevention",
+    "term": "Intrusion Prevention System (IPS)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security system that not only detects attacks but also actively blocks them.",
+    "whyItMatters": "IPS stops attacks in progress.",
+    "todaysTakeaway": "Prevent when possible. Detect when you can't.",
+    "relatedTerms": ["intrusion_detection", "threat_management", "network_defense"]
+  },
+  {
+    "id": "vulnerability_scanner",
+    "term": "Vulnerability Scanner",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Automated tool that probes systems for known vulnerabilities and misconfigurations.",
+    "whyItMatters": "Scanners find problems you can fix before attackers find them.",
+    "todaysTakeaway": "Scan regularly. Fix faster.",
+    "relatedTerms": ["vulnerability_management", "security_assessment", "patch_management"]
+  },
+  {
+    "id": "web_application_firewall",
+    "term": "Web Application Firewall (WAF)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Specialized firewall that protects web applications by filtering and monitoring HTTP/HTTPS traffic.",
+    "whyItMatters": "Web apps are common attack targets. WAFs add a protective layer.",
+    "todaysTakeaway": "Web apps need app-level protection.",
+    "relatedTerms": ["application_security", "network_defense", "firewall"]
+  },
+  {
+    "id": "application_security",
+    "term": "Application Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security practices and controls built into applications to prevent vulnerabilities and attacks.",
+    "whyItMatters": "Secure code prevents most common attacks.",
+    "todaysTakeaway": "Security starts in development.",
+    "relatedTerms": ["secure_development", "vulnerability_management", "code_review"]
+  },
+  {
+    "id": "secure_development",
+    "term": "Secure Development / Secure SDLC",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Integration of security practices throughout the software development lifecycle.",
+    "whyItMatters": "Fixing security in production is expensive and painful.",
+    "todaysTakeaway": "Build secure. Test secure. Release secure.",
+    "relatedTerms": ["application_security", "code_review", "penetration_testing"]
+  },
+  {
+    "id": "code_review",
+    "term": "Code Review",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Process where developers examine each other's code for bugs, vulnerabilities, and best practices.",
+    "whyItMatters": "Many vulnerabilities are caught in code review.",
+    "todaysTakeaway": "Another pair of eyes catches mistakes.",
+    "relatedTerms": ["secure_development", "application_security", "testing"]
+  },
+  {
+    "id": "penetration_testing",
+    "term": "Penetration Testing / Ethical Hacking",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Authorized attempt to exploit vulnerabilities in systems to identify security weaknesses before attackers do.",
+    "whyItMatters": "It shows what attackers can actually do, not just what they theoretically might.",
+    "todaysTakeaway": "Get hacked by friendly hackers first.",
+    "relatedTerms": ["security_assessment", "vulnerability_management", "threat_intelligence"]
+  },
+  {
+    "id": "red_team",
+    "term": "Red Team",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Team of security professionals acting as adversaries to test and improve an organization's defenses.",
+    "whyItMatters": "Red teams think like attackers. Organizations learn.",
+    "todaysTakeaway": "Get tested by your enemies before your enemies test you.",
+    "relatedTerms": ["penetration_testing", "threat_intelligence", "incident_response"]
+  },
+  {
+    "id": "blue_team",
+    "term": "Blue Team",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security team responsible for defending against attacks, incident response, and improving defenses.",
+    "whyItMatters": "Blue teams are the defenders.",
+    "todaysTakeaway": "Build your blue team.",
+    "relatedTerms": ["red_team", "incident_response", "threat_management"]
+  },
+  {
+    "id": "purple_team",
+    "term": "Purple Team",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Collaborative effort where red and blue teams work together to improve defenses through shared learning.",
+    "whyItMatters": "Collaboration between offense and defense produces better security.",
+    "todaysTakeaway": "Red and blue teams should share notes.",
+    "relatedTerms": ["red_team", "blue_team", "threat_management"]
+  },
+  {
+    "id": "supply_chain_risk",
+    "term": "Supply Chain Risk",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security risk posed by third-party vendors, contractors, and dependencies that could compromise the organization.",
+    "whyItMatters": "You're only as secure as your weakest vendor.",
+    "todaysTakeaway": "Know your supply chain. Manage it.",
+    "relatedTerms": ["third_party_risk", "vendor_management", "dependency_risk"]
+  },
+  {
+    "id": "third_party_risk",
+    "term": "Third-Party Risk",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security and operational risk from external vendors, partners, and service providers.",
+    "whyItMatters": "Third parties have access to sensitive data and systems.",
+    "todaysTakeaway": "Vendors need security vetting too.",
+    "relatedTerms": ["supply_chain_risk", "vendor_management", "access_control"]
+  },
+  {
+    "id": "vendor_management",
+    "term": "Vendor Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of evaluating, onboarding, monitoring, and offboarding external vendors to manage risks.",
+    "whyItMatters": "Vendor compromises cascade to you.",
+    "todaysTakeaway": "Choose vendors carefully. Monitor them always.",
+    "relatedTerms": ["third_party_risk", "supply_chain_risk", "access_control"]
+  },
+  {
+    "id": "dependency_risk",
+    "term": "Dependency Risk",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Risk from relying on third-party code libraries, frameworks, and services that may contain vulnerabilities.",
+    "whyItMatters": "One bad library in your dependencies can compromise everything.",
+    "todaysTakeaway": "Know your dependencies. Keep them updated.",
+    "relatedTerms": ["supply_chain_risk", "vulnerability_management", "patch_management"]
+  },
+  {
+    "id": "ransomware",
+    "term": "Ransomware",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Malware that encrypts an organization's data and demands payment for the decryption key.",
+    "whyItMatters": "Ransomware is the fastest-growing threat. It impacts availability and costs millions.",
+    "todaysTakeaway": "Plan for ransomware. Prepare backups. Never pay.",
+    "relatedTerms": ["malware", "encryption", "backup"]
+  },
+  {
+    "id": "malware",
+    "term": "Malware",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Malicious software designed to damage systems, steal data, or gain unauthorized access.",
+    "whyItMatters": "Malware is one of the oldest and most effective attack vectors.",
+    "todaysTakeaway": "Prevent it. Detect it. Remove it. Don't let it run.",
+    "relatedTerms": ["ransomware", "threat_management", "edr"]
+  },
+  {
+    "id": "phishing",
+    "term": "Phishing",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Social engineering attack using deceptive emails or messages to trick users into revealing credentials or clicking malicious links.",
+    "whyItMatters": "Phishing is the #1 entry point for breaches.",
+    "todaysTakeaway": "Train users. Monitor email. Block obviously bad senders.",
+    "relatedTerms": ["social_engineering", "credential_compromise", "mfa"]
+  },
+  {
+    "id": "social_engineering",
+    "term": "Social Engineering",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Manipulation of people to trick them into divulging secrets, bypassing security, or granting access.",
+    "whyItMatters": "People are the weakest link. Social engineering exploits that.",
+    "todaysTakeaway": "Users are your first line of defense or your first liability.",
+    "relatedTerms": ["phishing", "user_awareness", "security_culture"]
+  },
+  {
+    "id": "user_awareness",
+    "term": "User Awareness / Security Awareness",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Training and education program to help users recognize and report security threats.",
+    "whyItMatters": "Aware users are the best defense against social engineering.",
+    "todaysTakeaway": "Train users constantly. Test them occasionally.",
+    "relatedTerms": ["social_engineering", "security_culture", "user_training"]
+  },
+  {
+    "id": "user_training",
+    "term": "User Training",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Formal education program to teach users about security policies, best practices, and threats.",
+    "whyItMatters": "Educated users make fewer mistakes.",
+    "todaysTakeaway": "Training is an investment, not a burden.",
+    "relatedTerms": ["user_awareness", "security_culture", "policy_enforcement"]
+  },
+  {
+    "id": "security_culture",
+    "term": "Security Culture",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Organizational values and practices where security is everyone's responsibility and part of daily work.",
+    "whyItMatters": "Security culture is the foundation. Technology alone won't save you.",
+    "todaysTakeaway": "Build a culture that values security.",
+    "relatedTerms": ["user_awareness", "governance", "leadership"]
+  },
+  {
+    "id": "leadership",
+    "term": "Leadership / Security Leadership",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Executive commitment to security strategy, investment, and culture.",
+    "whyItMatters": "Without leadership support, security initiatives fail.",
+    "todaysTakeaway": "Security starts at the top.",
+    "relatedTerms": ["governance", "security_culture", "risk_management"]
+  },
+  {
+    "id": "risk_management",
+    "term": "Risk Management",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Process of identifying, analyzing, prioritizing, and mitigating organizational risks.",
+    "whyItMatters": "Risk management is how you allocate security resources effectively.",
+    "todaysTakeaway": "Risk doesn't go away. You manage it.",
+    "relatedTerms": ["risk_assessment", "governance", "leadership"]
+  },
+  {
+    "id": "identity_directory",
+    "term": "Identity Directory",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Centralized repository storing user and entity identities, attributes, and group memberships.",
+    "whyItMatters": "Everything starts with identity.",
+    "todaysTakeaway": "Know who is in your directory.",
+    "relatedTerms": ["identity_governance", "ldap", "active_directory"]
+  },
+  {
+    "id": "context_aware",
+    "term": "Context-Aware Authentication",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Authentication decisions based on context factors like location, device, time, and behavior.",
+    "whyItMatters": "Knowing who is asking isn't enough. Knowing where and how matters.",
+    "todaysTakeaway": "Context changes risk.",
+    "relatedTerms": ["zero_trust", "attribute_based_access_control", "mfa"]
+  },
+  {
+    "id": "privileged_access",
+    "term": "Privileged Access",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Elevated permissions allowing users to perform administrative, sensitive, or restricted operations.",
+    "whyItMatters": "PAM exists to protect this.",
+    "todaysTakeaway": "Manage privilege like it's your highest priority.",
+    "relatedTerms": ["privileged_account", "least_privilege", "pam"]
+  },
+  {
+    "id": "pam",
+    "term": "Privileged Access Management (PAM)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The cybersecurity strategy — comprising technology, processes, and governance — to control, monitor, secure, and audit all human and non-human privileged identities and activities across an enterprise environment.",
+    "whyItMatters": "Privileged accounts are the primary target in most breaches; PAM directly reduces that attack surface through access control, monitoring, and least privilege enforcement.",
+    "todaysTakeaway": "If you're not doing PAM, you're not serious about security.",
+    "relatedTerms": ["privileged_access", "identity_governance", "access_control"]
+  },
+  {
+    "id": "just_enough_admin",
+    "term": "Just Enough Admin (JEA)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A PowerShell security feature that limits administrative capabilities to only the specific commands and actions required for a defined task, using constrained endpoints and role-based access.",
+    "whyItMatters": "It applies the least privilege principle to administrative tasks, reducing the attack surface by preventing admins from doing anything beyond their defined role.",
+    "todaysTakeaway": "Windows admins should know JEA.",
+    "relatedTerms": ["least_privilege", "just_in_time_access", "windows_security"]
+  },
+  {
+    "id": "windows_security",
+    "term": "Windows Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security features and practices specific to Windows operating systems and Active Directory.",
+    "whyItMatters": "Most enterprises run Windows. Windows security is critical.",
+    "todaysTakeaway": "You can't secure what you don't understand.",
+    "relatedTerms": ["active_directory", "domain_admin", "tier_model"]
+  },
+  {
+    "id": "linux_security",
+    "term": "Linux Security",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Security features and practices specific to Linux operating systems.",
+    "whyItMatters": "Linux runs the cloud. Linux security is essential.",
+    "todaysTakeaway": "Learn sudo. Understand file permissions.",
+    "relatedTerms": ["unix_permissions", "cloud_security", "privileged_access"]
+  },
+  {
+    "id": "unix_permissions",
+    "term": "Unix/Linux Permissions",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "File and process access control system using user, group, and other permissions (rwx).",
+    "whyItMatters": "Unix permissions are the foundation of Linux security.",
+    "todaysTakeaway": "Understand 755, 700, 600. Know when to use each.",
+    "relatedTerms": ["linux_security", "access_control_list", "least_privilege"]
+  },
+  {
+    "id": "cloud_security",
+    "term": "Cloud Security",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Security practices and architecture for protecting data and systems in cloud environments.",
+    "whyItMatters": "Cloud is the default now. Cloud security is critical.",
+    "todaysTakeaway": "Cloud is someone else's computer. Know what that means.",
+    "relatedTerms": ["iam", "identity_governance", "service_principal"]
+  },
+  {
+    "id": "aws",
+    "term": "AWS (Amazon Web Services)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Amazon's cloud computing platform providing compute, storage, networking, and other services.",
+    "whyItMatters": "AWS is the market leader. Many organizations run on AWS.",
+    "todaysTakeaway": "AWS has its own IAM model. Learn it.",
+    "relatedTerms": ["cloud_security", "iam", "service_principal"]
+  },
+  {
+    "id": "azure",
+    "term": "Azure",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Microsoft's cloud computing platform integrated with Active Directory and Office 365.",
+    "whyItMatters": "Azure is Microsoft's future. Enterprises are migrating.",
+    "todaysTakeaway": "Azure AD is different from on-prem AD.",
+    "relatedTerms": ["cloud_security", "active_directory", "identity_governance"]
+  },
+  {
+    "id": "gcp",
+    "term": "GCP (Google Cloud Platform)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Google's cloud computing platform offering compute, data analytics, machine learning, and other services.",
+    "whyItMatters": "GCP is growing. Organizations choose based on workload.",
+    "todaysTakeaway": "Multi-cloud is the new normal.",
+    "relatedTerms": ["cloud_security", "iam", "multi_cloud"]
+  },
+  {
+    "id": "multi_cloud",
+    "term": "Multi-Cloud",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Strategy of using multiple cloud providers to avoid vendor lock-in and optimize services.",
+    "whyItMatters": "Multi-cloud is a complexity multiplier for security.",
+    "todaysTakeaway": "Many organizations have cloud spread. Manage it.",
+    "relatedTerms": ["cloud_security", "identity_governance", "vendor_risk"]
+  },
+  {
+    "id": "hybrid_cloud",
+    "term": "Hybrid Cloud",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Infrastructure combining on-premises systems with cloud services, requiring security across both.",
+    "whyItMatters": "Most enterprises are hybrid. Security must span both.",
+    "todaysTakeaway": "Hybrid means distributed identity. Hard to manage.",
+    "relatedTerms": ["cloud_security", "identity_governance", "network_isolation"]
+  },
+  {
+    "id": "database_security",
+    "term": "Database Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security controls protecting databases from unauthorized access, data theft, and modification.",
+    "whyItMatters": "Databases hold the crown jewels. Protect them.",
+    "todaysTakeaway": "Database admins are high-value targets.",
+    "relatedTerms": ["privileged_account", "data_protection", "encryption"]
+  },
+  {
+    "id": "sql_injection",
+    "term": "SQL Injection",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Attack where malicious SQL code is inserted into application input, allowing attackers to access or modify databases.",
+    "whyItMatters": "SQL injection is one of the oldest, most common attacks.",
+    "todaysTakeaway": "Parameterized queries prevent it.",
+    "relatedTerms": ["application_security", "web_application_firewall", "vulnerability_management"]
+  },
+  {
+    "id": "api_security",
+    "term": "API Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security practices protecting APIs from unauthorized access, data breaches, and abuse.",
+    "whyItMatters": "APIs are the connective tissue of modern applications.",
+    "todaysTakeaway": "Secure APIs like databases.",
+    "relatedTerms": ["application_security", "authentication", "authorization"]
+  },
+  {
+    "id": "authentication",
+    "term": "Authentication",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Process of verifying that a user or system is who they claim to be.",
+    "whyItMatters": "If you don't know who you're trusting, trust is meaningless.",
+    "todaysTakeaway": "Authentication is who you are. Authorization is what you can do.",
+    "relatedTerms": ["authorization", "identity_verification", "mfa"]
+  },
+  {
+    "id": "authorization",
+    "term": "Authorization",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Process of determining whether an authenticated user or system has permission to perform a specific action.",
+    "whyItMatters": "Authentication says who you are. Authorization says what you can do.",
+    "todaysTakeaway": "Strong authentication with weak authorization still fails.",
+    "relatedTerms": ["authentication", "access_control", "least_privilege"]
+  },
+  {
+    "id": "identity_verification",
+    "term": "Identity Verification",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Process of confirming that a person or entity is who they claim to be, often through documentation or biometrics.",
+    "whyItMatters": "It's the upstream process that starts with identity.",
+    "todaysTakeaway": "You can't have authentication without identity verification.",
+    "relatedTerms": ["authentication", "identity_governance", "onboarding"]
+  },
+  {
+    "id": "single_sign_on",
+    "term": "Single Sign-On (SSO)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Authentication mechanism allowing users to access multiple systems with a single login.",
+    "whyItMatters": "SSO improves user experience and centralizes authentication.",
+    "todaysTakeaway": "SSO is convenient but is a single point of failure if breached.",
+    "relatedTerms": ["authentication", "identity_governance", "federation"]
+  },
+  {
+    "id": "federation",
+    "term": "Federation",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "System allowing users from one organization to authenticate using credentials from another trusted organization.",
+    "whyItMatters": "It enables partner access without duplicating credentials.",
+    "todaysTakeaway": "Federation is SSO across organizational boundaries.",
+    "relatedTerms": ["single_sign_on", "identity_governance", "authentication"]
+  },
+  {
+    "id": "oauth",
+    "term": "OAuth 2.0",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Open standard protocol for delegated authorization, allowing users to grant third-party apps access without sharing passwords.",
+    "whyItMatters": "OAuth is how you safely let apps access your data.",
+    "todaysTakeaway": "OAuth 2.0 is everywhere. Understand it.",
+    "relatedTerms": ["authorization", "single_sign_on", "openid_connect"]
+  },
+  {
+    "id": "openid_connect",
+    "term": "OpenID Connect (OIDC)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "An authentication identity layer built on top of the OAuth 2.0 authorization framework, enabling clients to verify user identity and retrieve basic profile information.",
+    "whyItMatters": "OIDC separates authentication from authorization cleanly — it is the standard modern applications use for federated login.",
+    "todaysTakeaway": "OIDC is modern federated identity.",
+    "relatedTerms": ["oauth", "authentication", "federation"]
+  },
+  {
+    "id": "saml",
+    "term": "SAML (Security Assertion Markup Language)",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "XML-based standard for exchanging authentication and authorization information between trusted parties.",
+    "whyItMatters": "SAML is enterprise single sign-on.",
+    "todaysTakeaway": "Understand SAML for enterprise federation, but evaluate OIDC for modern application integrations.",
+    "relatedTerms": ["single_sign_on", "federation", "authentication"]
+  },
+  {
+    "id": "zero_knowledge_proof",
+    "term": "Zero Knowledge Proof",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Cryptographic method proving knowledge of a secret without revealing the secret itself.",
+    "whyItMatters": "It's mathematically elegant and increasingly used in blockchain and privacy tech.",
+    "todaysTakeaway": "Prove you know without telling.",
+    "relatedTerms": ["cryptography", "privacy", "authentication"]
+  },
+  {
+    "id": "biometric",
+    "term": "Biometric Authentication",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Authentication using unique biological characteristics (fingerprint, face, iris) that are hard to forge.",
+    "whyItMatters": "It's increasingly practical and very hard to compromise.",
+    "todaysTakeaway": "Biometrics strengthen MFA but must be paired with a physical factor — they are not a standalone authenticator.",
+    "relatedTerms": ["mfa", "passwordless_authentication", "authentication"]
+  },
+  {
+    "id": "hardware_key",
+    "term": "Hardware Security Key / FIDO2",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Physical device (like USB key) providing strong, phishing-resistant authentication.",
+    "whyItMatters": "Hardware keys are nearly impossible to phish or compromise.",
+    "todaysTakeaway": "Issue hardware keys to your most privileged users.",
+    "relatedTerms": ["mfa", "passwordless_authentication", "phishing"]
+  },
+  {
+    "id": "attestation",
+    "term": "Attestation",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Process of verifying that hardware or software is in a secure, expected state.",
+    "whyItMatters": "It proves systems haven't been tampered with.",
+    "todaysTakeaway": "Attestation is verification with proof.",
+    "relatedTerms": ["zero_trust", "device_security", "authentication"]
+  },
+  {
+    "id": "device_security",
+    "term": "Device Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security measures protecting endpoints like laptops, phones, and servers from compromise.",
+    "whyItMatters": "Devices are the entry point to networks.",
+    "todaysTakeaway": "Secure devices. Secure networks follows.",
+    "relatedTerms": ["endpoint_security", "edr", "mobile_security"]
+  },
+  {
+    "id": "endpoint_security",
+    "term": "Endpoint Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security technology and practices protecting endpoints from malware, unauthorized access, and data loss.",
+    "whyItMatters": "Endpoints are everywhere and are prime attack targets.",
+    "todaysTakeaway": "Endpoint security is foundational.",
+    "relatedTerms": ["device_security", "edr", "antivirus"]
+  },
+  {
+    "id": "antivirus",
+    "term": "Antivirus / Anti-Malware",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Software that detects, prevents, and removes malware by scanning for known malicious code patterns and behaviors.",
+    "whyItMatters": "Antivirus is the old standby. Still needed but not sufficient alone.",
+    "todaysTakeaway": "Antivirus plus EDR is better than antivirus alone.",
+    "relatedTerms": ["endpoint_security", "edr", "malware"]
+  },
+  {
+    "id": "mobile_security",
+    "term": "Mobile Security",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security practices and technology protecting mobile devices (phones, tablets) from compromise.",
+    "whyItMatters": "Mobile is a gateway to corporate data.",
+    "todaysTakeaway": "Mobile users need the same protections as desktop users.",
+    "relatedTerms": ["device_security", "endpoint_security", "mdm"]
+  },
+  {
+    "id": "mdm",
+    "term": "MDM (Mobile Device Management)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Technology for managing, securing, and monitoring mobile devices in an organization.",
+    "whyItMatters": "MDM lets you enforce policies on personal and corporate devices.",
+    "todaysTakeaway": "You can't manage what you can't see.",
+    "relatedTerms": ["mobile_security", "device_security", "policy_enforcement"]
+  },
+  {
+    "id": "policy_enforcement",
+    "term": "Policy Enforcement",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Process of ensuring that defined policies are followed and violations are detected and remediated.",
+    "whyItMatters": "Policy without enforcement is just hope.",
+    "todaysTakeaway": "Write policies. Enforce them. Audit compliance.",
+    "relatedTerms": ["governance", "compliance", "audit"]
+  },
+  {
+    "id": "cryptography",
+    "term": "Cryptography",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Science and practice of securing information through mathematical algorithms.",
+    "whyItMatters": "Cryptography is how secrets stay secret.",
+    "todaysTakeaway": "Use strong, proven cryptography. Don't invent your own.",
+    "relatedTerms": ["encryption", "key_management", "digital_signature"]
+  },
+  {
+    "id": "onboarding",
+    "term": "Onboarding",
+    "category": "Supporting",
+    "depth": "Quick",
+    "definition": "Process of setting up new users with systems, credentials, and access when they join an organization.",
+    "whyItMatters": "Good onboarding prevents access bloat from day one.",
+    "todaysTakeaway": "Onboarding sets the tone.",
+    "relatedTerms": ["user_provisioning", "identity_governance", "access_control"]
+  },
+  {
+    "id": "pass_the_hash",
+    "term": "Pass-the-Hash",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An attack technique where an attacker captures a password hash from one system and reuses it to authenticate to other systems without knowing the plaintext password.",
+    "whyItMatters": "Reusing hashed credentials lets attackers move laterally across systems even after passwords appear to be rotated — the hash remains valid until the actual password changes.",
+    "todaysTakeaway": "Credential protection isn't just about password strength — it's about where hashes are stored and who can capture them.",
+    "relatedTerms": ["credential_dumping", "lateral_movement", "credential_compromise", "laps"]
+  },
+  {
+    "id": "golden_ticket_attack",
+    "term": "Golden Ticket Attack",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A Kerberos attack in which an attacker who has obtained the KRBTGT account hash can forge Ticket Granting Tickets to impersonate any user or service in the domain — effectively bypassing all authentication for the ticket's lifetime.",
+    "whyItMatters": "A golden ticket grants full domain control indefinitely — even after passwords are changed — until the KRBTGT key is rotated twice, making detection and recovery extremely difficult.",
+    "todaysTakeaway": "Compromise of the KRBTGT account is a full domain rebuild event. Treat it as such.",
+    "relatedTerms": ["active_directory", "domain_admin", "credential_dumping", "dcsync_attack"]
+  },
+  {
+    "id": "credential_dumping",
+    "term": "Credential Dumping",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An attack technique that extracts stored credentials from operating system memory (such as LSASS on Windows) or from credential stores, enabling attackers to reuse or crack them for lateral movement.",
+    "whyItMatters": "Once an attacker has local admin access to any machine, they can dump cached credentials that may unlock dozens of other systems — including domain controllers.",
+    "todaysTakeaway": "Every compromised endpoint is a potential credential factory. Endpoint protection is access protection.",
+    "relatedTerms": ["pass_the_hash", "lateral_movement", "laps", "credential_compromise"]
+  },
+  {
+    "id": "laps",
+    "term": "LAPS (Local Administrator Password Solution)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A solution that automatically manages and rotates unique, randomized local administrator passwords on domain-joined computers, storing them securely in the directory and making them inaccessible to standard users.",
+    "whyItMatters": "Without LAPS, most organizations share the same local admin password across thousands of machines — one compromised machine means all machines are accessible with the same credential.",
+    "todaysTakeaway": "Every Windows machine with the same local admin password isn't a fleet — it's one giant attack surface with thousands of entry points.",
+    "relatedTerms": ["active_directory", "credential_rotation", "pass_the_hash", "credential_dumping"]
+  },
+  {
+    "id": "group_managed_service_account",
+    "term": "Group Managed Service Account (gMSA)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An Active Directory account type designed for services running across multiple servers, with passwords automatically managed and rotated by the domain — eliminating manual credential handling for service identities.",
+    "whyItMatters": "Service accounts with manually managed passwords are frequently over-permissioned, never rotated, and forgotten. gMSAs automate the entire credential lifecycle without requiring human intervention.",
+    "todaysTakeaway": "If you're still manually managing service account passwords, you're doing credential security by hand in a world that automates everything else.",
+    "relatedTerms": ["service_account", "credential_rotation", "active_directory", "just_in_time_access"]
+  },
+  {
+    "id": "zero_standing_privilege",
+    "term": "Zero Standing Privilege (ZSP)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The security goal of eliminating all persistent elevated access — every privileged action requires an explicit, time-limited grant at the moment of need, and no account holds standing privilege between tasks.",
+    "whyItMatters": "Standing privilege is the attack surface. Zero standing privilege eliminates the standing target — every account starts with zero permissions and must earn them for each specific task.",
+    "todaysTakeaway": "ZSP isn't a product — it's a destination. Just-In-Time access and least privilege are the road that gets you there.",
+    "relatedTerms": ["standing_privilege", "just_in_time_access", "least_privilege", "privileged_account"]
+  },
+  {
+    "id": "ephemeral_credentials",
+    "term": "Ephemeral Credentials",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Short-lived credentials that are dynamically generated for a specific session or task and automatically expire, never persisting beyond their intended use or available for reuse.",
+    "whyItMatters": "Long-lived credentials get forgotten, shared, and stolen. Ephemeral credentials expire before most attacks can exploit them — turning every stolen credential into a rapidly depreciating asset.",
+    "todaysTakeaway": "The best credential is the one that no longer exists by the time an attacker finds it.",
+    "relatedTerms": ["just_in_time_access", "credential_rotation", "zero_standing_privilege", "secret_management"]
+  },
+  {
+    "id": "cloud_infrastructure_entitlement_management",
+    "term": "Cloud Infrastructure Entitlement Management (CIEM)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A category of security tooling that discovers, analyzes, and right-sizes entitlements across cloud environments — identifying over-permissioned identities, unused permissions, and policy violations at a scale no human review can match.",
+    "whyItMatters": "Cloud environments create entitlements faster than any team can manually review. CIEM applies automation to surface and fix the most dangerous over-permissioned identities before attackers exploit them.",
+    "todaysTakeaway": "In the cloud, least privilege requires tooling. You cannot manually review tens of thousands of entitlements.",
+    "relatedTerms": ["identity_governance", "least_privilege", "cloud_security", "access_sprawl"]
+  },
+  {
+    "id": "workload_identity",
+    "term": "Workload Identity",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The identity assigned to non-human compute resources — applications, containers, virtual machines, and automated processes — used to authenticate when accessing cloud services, APIs, and data stores.",
+    "whyItMatters": "Workload identities are among the most over-permissioned identities in cloud environments. They often hold privileges far beyond what the application needs — creating massive blast radius if compromised.",
+    "todaysTakeaway": "Your containers and cloud functions are identities too. Scope them as tightly as you would any human account.",
+    "relatedTerms": ["service_principal", "machine_identity", "ephemeral_credentials", "cloud_security"]
+  },
+  {
+    "id": "identity_provider",
+    "term": "Identity Provider (IdP)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A system that creates, stores, and manages digital identities and provides authentication services to relying applications — serving as the authoritative source that verifies who a user or system is.",
+    "whyItMatters": "If your IdP is compromised, every application that trusts it is compromised. The IdP is simultaneously the most critical system to protect and the highest-value target for attackers.",
+    "todaysTakeaway": "Every system that asks 'who are you?' is trusting your IdP to answer. Protect the IdP like the skeleton key it is.",
+    "relatedTerms": ["authentication", "single_sign_on", "federation", "zero_trust"]
+  },
+  {
+    "id": "jump_server",
+    "term": "Jump Server",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A hardened, audited intermediary host that administrators must connect through to access systems in secure or isolated network zones — creating a controlled, logged chokepoint for all privileged remote access.",
+    "whyItMatters": "Direct access from general workstations to sensitive servers bypasses monitoring and creates an uncontrolled path for credential theft. A jump server forces all access through a logged, controlled gateway.",
+    "todaysTakeaway": "Every direct connection to a sensitive system is a monitoring gap. Route privileged access through a jump server.",
+    "relatedTerms": ["admin_workstation", "privileged_remote_access", "session_recording", "tier_model"]
+  },
+  {
+    "id": "privileged_remote_access",
+    "term": "Privileged Remote Access (PRA)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Secure, controlled access mechanisms for remote users, vendors, and contractors to reach privileged systems — enforcing strong authentication, session recording, and least privilege without granting broad network-level access.",
+    "whyItMatters": "Traditional VPN grants wide network access once connected. PRA provides targeted, monitored access to only the specific systems needed — reducing exposure and improving auditability.",
+    "todaysTakeaway": "VPN is network access. PRA is system access. For privileged work, they are not the same thing.",
+    "relatedTerms": ["jump_server", "session_recording", "mfa", "vendor_management", "least_privilege"]
+  },
+  {
+    "id": "network_access_control",
+    "term": "Network Access Control (NAC)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A network security approach that enforces policy-based decisions about which devices and users can access the network — evaluating device health, identity, and compliance state before granting connectivity.",
+    "whyItMatters": "An unmanaged or non-compliant device connecting to your network bypasses endpoint security controls entirely. NAC ensures only known, healthy, authorized devices get in.",
+    "todaysTakeaway": "Identity alone isn't enough for network access. Know not just who is connecting, but from what device and in what state.",
+    "relatedTerms": ["endpoint_security", "zero_trust", "device_security", "microsegmentation"]
+  },
+  {
+    "id": "deception_technology",
+    "term": "Deception Technology",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Security controls that detect attackers by placing realistic decoy assets — fake credentials, fake servers, fake data files — throughout the environment that no legitimate user would ever access.",
+    "whyItMatters": "Any access to a deceptive asset is an unambiguous attacker signal. It catches compromised accounts and active intrusions with near-zero false positives — no baseline required.",
+    "todaysTakeaway": "Put fake keys in every lock. If someone uses one, you've caught an attacker — not a misconfigured tool.",
+    "relatedTerms": ["honeytoken", "continuous_monitoring", "anomaly_detection", "insider_threat"]
+  },
+  {
+    "id": "honeytoken",
+    "term": "Honeytoken",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A fake credential, API key, or piece of sensitive data placed intentionally in a location an attacker would access during recon or lateral movement. Any use of a honeytoken triggers an immediate high-confidence alert.",
+    "whyItMatters": "Honeytokens work regardless of attacker sophistication — if they steal and use a fake credential, you get an unambiguous alert with minimal false positives.",
+    "todaysTakeaway": "Place fake credentials in your most-targeted locations. Legitimate users never touch them. Attackers always do.",
+    "relatedTerms": ["deception_technology", "continuous_monitoring", "credential_compromise", "insider_threat"]
+  },
+  {
+    "id": "blast_radius",
+    "term": "Blast Radius",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The scope of damage an attacker can cause if a specific account, credential, or system is compromised — determined entirely by what that account is permitted to access and do.",
+    "whyItMatters": "Least privilege directly reduces blast radius. An over-permissioned account doesn't just represent a single risk — it represents the risk of everything that account can reach.",
+    "todaysTakeaway": "Every permission you grant is an expansion of blast radius. Grant only what's genuinely needed.",
+    "relatedTerms": ["least_privilege", "privilege_escalation", "zero_standing_privilege", "lateral_movement"]
+  },
+  {
+    "id": "access_sprawl",
+    "term": "Access Sprawl",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The uncontrolled accumulation of access rights across systems, applications, and environments over time — typically because access is routinely granted but rarely reviewed or revoked.",
+    "whyItMatters": "Access sprawl means most accounts hold far more access than their current role requires. Every unused permission is unused attack surface, sitting dormant until an attacker or compromised account exploits it.",
+    "todaysTakeaway": "Access that was granted for a reason two years ago has no obligation to still exist today. Review and revoke.",
+    "relatedTerms": ["privilege_creep", "identity_governance", "access_recertification", "least_privilege"]
+  },
+  {
+    "id": "toxic_combination",
+    "term": "Toxic Combination",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A pairing of permissions that together create a high-risk capability or segregation of duties violation — neither permission appears dangerous in isolation, but in combination they enable fraud, sabotage, or unauthorized access.",
+    "whyItMatters": "Individual permission reviews routinely miss toxic combinations. A user who can both create vendors and approve payments has the ability to commit fraud — even if each permission appeared justified when granted separately.",
+    "todaysTakeaway": "Permissions must be reviewed in combination, not just individually. Two legitimate permissions can combine to form one critical risk.",
+    "relatedTerms": ["segregation_of_duties", "identity_governance", "access_review", "role_explosion"]
+  },
+  {
+    "id": "principle_of_need_to_know",
+    "term": "Need-to-Know Principle",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The principle that access to information or systems should be limited to only those whose specific duties require it — authorization level alone does not justify access without a demonstrated business need.",
+    "whyItMatters": "Authorization grants eligibility; need-to-know grants actual access. Without this distinction, broadly authorized users accumulate access to data and systems far beyond any legitimate purpose.",
+    "todaysTakeaway": "Being authorized to access something is different from having a reason to. Require both.",
+    "relatedTerms": ["least_privilege", "data_protection", "segregation_of_duties", "confidentiality"]
+  },
+  {
+    "id": "privileged_access_workstation",
+    "term": "Privileged Access Workstation (PAW)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A dedicated, hardened workstation used exclusively for privileged administrative tasks — physically or logically isolated from internet browsing, email, and general computing to prevent credential theft via everyday attack vectors.",
+    "whyItMatters": "Using a general workstation for admin work means privileged credentials share a machine with email and web browsing — two of the most reliable attack vectors. A PAW eliminates this exposure.",
+    "todaysTakeaway": "A PAW is not a policy document — it is a separate machine dedicated solely to administrative work. Treat the privilege boundary seriously.",
+    "relatedTerms": ["admin_workstation", "tier_model", "jump_server", "endpoint_security"]
+  },
+  {
+    "id": "identity_analytics",
+    "term": "Identity Analytics",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The application of data analysis and machine learning to identity and access data — surfacing risky access patterns, over-privileged accounts, dormant entitlements, and anomalous behavior that manual review cannot detect at scale.",
+    "whyItMatters": "In large environments, manual access reviews catch only the most obvious issues. Analytics finds the highest-risk identities and permission combinations before attackers do.",
+    "todaysTakeaway": "Know which accounts represent your greatest risk before an attacker maps them for you.",
+    "relatedTerms": ["ueba", "behavioral_analytics", "identity_governance", "access_review"]
+  },
+  {
+    "id": "risk_based_authentication",
+    "term": "Risk-Based Authentication (RBA)",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An authentication approach that dynamically adjusts security requirements based on real-time risk signals — location, device health, behavioral patterns — stepping up authentication strength when elevated risk is detected.",
+    "whyItMatters": "Applying the same authentication barrier to every login regardless of context is both inconvenient for users and insufficient against attackers who have stolen valid credentials from a trusted device.",
+    "todaysTakeaway": "Not all logins carry the same risk. A login from a known device at normal hours deserves less friction than one from an unfamiliar country at 3 AM.",
+    "relatedTerms": ["mfa", "context_aware", "zero_trust", "behavioral_analytics"]
+  },
+  {
+    "id": "audit_log_integrity",
+    "term": "Audit Log Integrity",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Controls that ensure audit logs are complete, accurate, and protected from modification — including write-once storage, cryptographic signing, and immediate offloading to prevent local tampering.",
+    "whyItMatters": "An attacker with admin access can cover their tracks by modifying logs on compromised systems. Logs are only useful for forensics if they can be trusted — a tampered log is no log at all.",
+    "todaysTakeaway": "A log an attacker can delete is not a log. Ship logs to immutable, out-of-band storage immediately.",
+    "relatedTerms": ["security_audit_trail", "non_repudiation", "forensics", "continuous_monitoring"]
+  },
+  {
+    "id": "digital_certificate",
+    "term": "Digital Certificate",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An electronic document that binds a public key to the identity of an entity — issued and digitally signed by a Certificate Authority — used to verify identity, enable encrypted communication, and authenticate services.",
+    "whyItMatters": "Certificates underpin HTTPS, code signing, and mutual authentication. A trusted but compromised or mis-issued certificate enables undetected impersonation at scale.",
+    "todaysTakeaway": "A certificate is a voucher from a CA saying 'this key belongs to this entity.' The voucher is only as trustworthy as the CA that issued it.",
+    "relatedTerms": ["public_key_infrastructure", "certificate_authority", "certificate_management", "encryption"]
+  },
+  {
+    "id": "shadow_it",
+    "term": "Shadow IT",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "Technology — applications, cloud services, devices — used within an organization without IT knowledge or approval, creating unmanaged access points and security gaps that exist entirely outside established controls.",
+    "whyItMatters": "Every unsanctioned cloud account, unauthorized SaaS tool, or personal device handling company data is an unmanaged access point that bypasses identity governance, monitoring, and offboarding processes entirely.",
+    "todaysTakeaway": "If IT doesn't know it exists, IT cannot govern, secure, or deprovision it.",
+    "relatedTerms": ["identity_governance", "cloud_security", "access_control_list", "user_deprovisioning"]
+  },
+  {
+    "id": "orphaned_account",
+    "term": "Orphaned Account",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An account that retains active credentials and access rights after its associated person has left the organization, changed roles, or no longer has a business need — effectively a door with no current legitimate owner.",
+    "whyItMatters": "Orphaned accounts are dormant attack surfaces. Former employees, compromised systems, or external attackers can leverage them months or years after they should have been deactivated.",
+    "todaysTakeaway": "An account with no current owner is a door with no one watching who walks through it.",
+    "relatedTerms": ["access_deprovisioning", "user_deprovisioning", "identity_governance", "privilege_creep"]
+  },
+  {
+    "id": "account_takeover",
+    "term": "Account Takeover (ATO)",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "An attack in which a malicious actor gains unauthorized control of a legitimate user's account — typically through credential theft, phishing, session hijacking, or SIM swapping — and operates under that identity.",
+    "whyItMatters": "A taken-over privileged account gives an attacker all legitimate access that account holds while appearing entirely normal to systems that check identity but not behavior.",
+    "todaysTakeaway": "The most dangerous attacker is one wearing a legitimate identity. Behavior monitoring is how you catch them.",
+    "relatedTerms": ["credential_compromise", "phishing", "mfa", "continuous_monitoring"]
+  },
+  {
+    "id": "identity_proofing",
+    "term": "Identity Proofing",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The process of verifying that someone is who they claim to be before issuing credentials or creating an account — establishing a verified, trustworthy identity at the moment of provisioning.",
+    "whyItMatters": "All downstream access controls depend on the integrity of the initial identity. If a fabricated or stolen identity is provisioned, every subsequent control that grants access to it is bypassed.",
+    "todaysTakeaway": "Garbage in, garbage out. A false identity at creation undermines every security control that follows.",
+    "relatedTerms": ["identity_verification", "user_provisioning", "authentication", "onboarding"]
+  },
+  {
+    "id": "defense_in_depth",
+    "term": "Defense in Depth",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A security strategy that layers multiple independent controls so that the failure of any single layer does not result in a total breach — each layer creates an independent barrier an attacker must defeat.",
+    "whyItMatters": "Every security control can be bypassed. The question is whether more controls exist behind it. Defense in depth ensures no single point of failure determines the outcome of an attack.",
+    "todaysTakeaway": "Never rely on any single control. Design every security layer assuming the layer before it has already failed.",
+    "relatedTerms": ["zero_trust", "microsegmentation", "least_privilege", "continuous_monitoring"]
+  },
+  {
+    "id": "digital_identity",
+    "term": "Digital Identity",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The complete set of attributes, credentials, and entitlements that uniquely represent a person, device, or automated process in digital interactions — the foundation upon which every access control decision is made.",
+    "whyItMatters": "Every access control decision starts with identity. If identity records are wrong, incomplete, or compromised, every downstream control built on top of them is equally compromised.",
+    "todaysTakeaway": "Identity is the new perimeter. Securing it is securing everything that depends on it.",
+    "relatedTerms": ["identity_and_access_management", "identity_provider", "authentication", "identity_governance"]
+  },
+  {
+    "id": "privileged_task_automation",
+    "term": "Privileged Task Automation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The execution of privileged administrative operations by automated, scripted processes rather than interactive human sessions — enabling necessary privileged actions without requiring standing human credentials or manual access.",
+    "whyItMatters": "Automating routine privileged tasks removes humans from repetitive privileged operations, reduces error, and eliminates unnecessary interactive sessions that represent prime targets for session hijacking.",
+    "todaysTakeaway": "Every time a human logs in as admin to run a routine task, that is a session that could have been automated — and an attack surface that didn't need to exist.",
+    "relatedTerms": ["service_account", "just_in_time_access", "zero_standing_privilege", "secret_management"]
+  },
+  {
+    "id": "access_review",
+    "term": "Access Review",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "A structured, periodic process in which account owners, managers, or security teams formally review current access rights and certify that each entitlement remains appropriate, needed, and correctly assigned.",
+    "whyItMatters": "Access accumulates over time through role changes, project assignments, and manual grants. Without regular reviews, accounts hold permissions far beyond what their current role requires.",
+    "todaysTakeaway": "Access reviews are the cleanup crew for privilege creep. Schedule them. Run them. Act on what you find.",
+    "relatedTerms": ["access_recertification", "identity_governance", "privilege_creep", "segregation_of_duties"]
+  },
+  {
+    "id": "entitlement_management",
+    "term": "Entitlement Management",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The discipline of defining, controlling, and governing the specific permissions and access rights each identity holds across systems and applications — treating every entitlement as a managed asset with an owner and a justification.",
+    "whyItMatters": "Without active entitlement management, access decisions drift over time into ad hoc grants that never expire. The accumulated result becomes the attack surface.",
+    "todaysTakeaway": "An entitlement is a promise that a specific identity can do a specific thing. Every promise needs an owner and an expiration.",
+    "relatedTerms": ["identity_governance", "access_control_list", "least_privilege", "cloud_infrastructure_entitlement_management"]
+  },
+  {
+    "id": "vaulting",
+    "term": "Vaulting",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The practice of storing credentials in a centralized, access-controlled repository where they can be retrieved only through authenticated, audited requests — removing credentials from end users' direct knowledge and limiting exposure.",
+    "whyItMatters": "Vaulting removes credentials from the places they get shared, written down, and compromised. Administrators access systems through the vault's controlled interface without ever handling the actual secret.",
+    "todaysTakeaway": "The goal of vaulting isn't to give you access to passwords — it's to give you access to systems without needing passwords.",
+    "relatedTerms": ["password_vault", "credential_injection", "secret_management", "credential_rotation"]
+  },
+  {
+    "id": "credential_injection",
+    "term": "Credential Injection",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "A PAM capability in which the vault transparently supplies credentials to a session or connection on behalf of the user — granting system access without the user ever seeing or knowing the actual password.",
+    "whyItMatters": "If users see credentials, they can share, photograph, or inadvertently expose them. Credential injection makes the credential invisible to the user while still granting the necessary access.",
+    "todaysTakeaway": "The most secure credential is the one the user never needs to see.",
+    "relatedTerms": ["vaulting", "password_vault", "privileged_session", "credential_rotation"]
+  },
+  {
+    "id": "session_isolation",
+    "term": "Session Isolation",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An architectural control ensuring that privileged sessions are separated from general user sessions and untrusted network paths — preventing malware on general-purpose machines from reaching or intercepting privileged activity.",
+    "whyItMatters": "Mixing privileged and general sessions on the same machine means malware installed through email or browsing can intercept, hijack, or credential-dump privileged operations.",
+    "todaysTakeaway": "Privileged access needs its own lane. Admin traffic must not mix with general user traffic on the same machine or network path.",
+    "relatedTerms": ["privileged_session", "privileged_access_workstation", "jump_server", "tier_model"]
+  },
+  {
+    "id": "role_explosion",
+    "term": "Role Explosion",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The uncontrolled proliferation of role definitions in an RBAC system, typically caused by over-customizing roles for individual users or edge cases, until the role catalog becomes too complex to manage, audit, or govern effectively.",
+    "whyItMatters": "When an organization has more roles than users, the operational simplicity that RBAC was designed to deliver disappears — and toxic combinations and excessive permissions become nearly impossible to detect.",
+    "todaysTakeaway": "More roles is not better. Fewer, clearly defined roles with consistent enforcement deliver better security than a custom role for every edge case.",
+    "relatedTerms": ["role_based_access_control", "identity_governance", "toxic_combination", "access_review"]
+  },
+  {
+    "id": "time_based_access",
+    "term": "Time-Based Access",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "Access controls that restrict when a user, account, or process is permitted to authenticate or perform actions — limiting access to defined hours, days, or session durations to reduce the attack window.",
+    "whyItMatters": "A valid admin account authenticating at 3 AM when no maintenance is scheduled is anomalous by definition. Time-based controls flag or block this automatically, without requiring behavioral baseline analysis.",
+    "todaysTakeaway": "Limit access by when, not just who. After-hours authentication from a privileged account should require explicit justification.",
+    "relatedTerms": ["just_in_time_access", "continuous_monitoring", "anomaly_detection", "context_aware"]
+  },
+  {
+    "id": "human_identity",
+    "term": "Human Identity",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "The digital identity of a person within an IT environment — distinct from machine identities, service accounts, and automated processes — characterized by accountability, behavioral expectations, and oversight requirements unique to human actors.",
+    "whyItMatters": "Human and machine identities require fundamentally different security controls. Applying machine-identity controls to humans, or vice versa, creates gaps that attackers routinely exploit.",
+    "todaysTakeaway": "Know whether you're managing a human or a machine. The accountability model, the controls, and the risks are different.",
+    "relatedTerms": ["machine_identity", "service_account", "digital_identity", "insider_threat"]
+  },
+  {
+    "id": "dcsync_attack",
+    "term": "DCSync Attack",
+    "category": "Supporting",
+    "depth": "Supporting",
+    "definition": "An attack technique that impersonates a domain controller and requests credential hash replication from Active Directory via the Directory Replication Service — obtaining password hashes for every domain account without physically touching a domain controller.",
+    "whyItMatters": "An attacker with sufficient AD privileges can silently extract every password hash in the domain — including the KRBTGT hash needed for golden tickets — without triggering traditional intrusion detection tools.",
+    "todaysTakeaway": "Directory replication privileges are functionally equivalent to domain admin. Control who can request replication as tightly as you control who can log onto domain controllers.",
+    "relatedTerms": ["active_directory", "domain_admin", "golden_ticket_attack", "credential_dumping"]
+  },
+  {
+    "id": "attack_path",
+    "term": "Attack Path",
+    "category": "Core",
+    "depth": "Core",
+    "definition": "The sequence of steps an attacker follows from initial compromise to a target system — chaining together permissions, trust relationships, and misconfigurations to escalate privilege and reach high-value assets.",
+    "whyItMatters": "Individual permissions and accounts look innocuous in isolation. Understanding the attack path reveals which combinations of access create the most dangerous routes to critical systems.",
+    "todaysTakeaway": "Attackers think in paths, not permissions. Map your attack paths before attackers do.",
+    "relatedTerms": ["lateral_movement", "privilege_escalation", "blast_radius", "zero_trust"]
+  }
+]

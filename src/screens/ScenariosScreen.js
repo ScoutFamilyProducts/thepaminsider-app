@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   StyleSheet,
   SafeAreaView,
   FlatList,
   Text,
-  ProgressBarAndroid,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { colors, theme } from '../theme/colors';
 import { Card, Heading, Paragraph, Badge } from '../components/UIComponents';
 import scenariosData from '../data/scenarios.json';
@@ -15,27 +15,28 @@ import { storage } from '../utils/storage';
 export default function ScenariosScreen({ navigation }) {
   const [completedScenarios, setCompletedScenarios] = useState([]);
 
-  React.useEffect(() => {
-    const loadCompletedScenarios = async () => {
-      const completed = await storage.getCompletedScenarios();
-      setCompletedScenarios(completed);
-    };
-    loadCompletedScenarios();
-  }, []);
+  // useFocusEffect re-runs every time this screen comes into focus,
+  // so the count updates immediately after returning from a completed scenario.
+  useFocusEffect(
+    useCallback(() => {
+      const loadCompletedScenarios = async () => {
+        const completed = await storage.getCompletedScenarios();
+        setCompletedScenarios(completed);
+      };
+      loadCompletedScenarios();
+    }, [])
+  );
 
   const completionPercentage =
-    (completedScenarios.length / scenariosData.length) * 100;
+    scenariosData.length > 0
+      ? (completedScenarios.length / scenariosData.length) * 100
+      : 0;
 
-  const getDifficultyColor = difficulty => {
+  const getDifficultyVariant = difficulty => {
     switch (difficulty) {
-      case 'Beginner':
-        return colors.electricBlue;
-      case 'Intermediate':
-        return colors.riskOrange;
-      case 'Advanced':
-        return colors.criticalRed;
-      default:
-        return colors.neonGreen;
+      case 'Beginner':   return 'secondary';
+      case 'Advanced':   return 'danger';
+      default:           return 'warning';
     }
   };
 
@@ -56,23 +57,13 @@ export default function ScenariosScreen({ navigation }) {
             <View style={styles.scenarioMeta}>
               <Badge
                 label={item.difficulty}
-                variant={
-                  item.difficulty === 'Beginner'
-                    ? 'secondary'
-                    : item.difficulty === 'Advanced'
-                    ? 'danger'
-                    : 'warning'
-                }
+                variant={getDifficultyVariant(item.difficulty)}
                 size="sm"
               />
-              <Badge
-                label={item.category}
-                variant="primary"
-                size="sm"
-              />
+              <Badge label={item.category} variant="primary" size="sm" />
             </View>
           </View>
-          {isCompleted && <Text style={styles.completedBadge}>✓</Text>}
+          {isCompleted && <Text style={styles.completedCheck}>✓</Text>}
         </View>
 
         <Paragraph numberOfLines={2} style={styles.scenarioSnippet}>
@@ -86,39 +77,43 @@ export default function ScenariosScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <Heading level={2} style={styles.headerTitle}>
-          What Went Wrong?
-        </Heading>
-        <Paragraph style={styles.headerSubtitle}>
-          Real-world PAM failures and lessons
-        </Paragraph>
-      </View>
-
-      <View style={styles.progressContainer}>
-        <View style={styles.progressStats}>
-          <Text style={styles.progressText}>
-            {completedScenarios.length} / {scenariosData.length} completed
-          </Text>
-          <Text style={styles.progressPercent}>
-            {Math.round(completionPercentage)}%
-          </Text>
-        </View>
-        <ProgressBarAndroid
-          styleAttr="Horizontal"
-          indeterminate={false}
-          progress={completionPercentage / 100}
-          color={colors.neonGreen}
-          style={styles.progressBar}
-        />
-      </View>
-
       <FlatList
         data={scenariosData}
         renderItem={renderScenario}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View>
+            <View style={styles.header}>
+              <Heading level={2} style={styles.headerTitle}>
+                What Went Wrong?
+              </Heading>
+              <Paragraph style={styles.headerSubtitle}>
+                Real-world PAM failures and lessons
+              </Paragraph>
+            </View>
+
+            <View style={styles.progressContainer}>
+              <View style={styles.progressStats}>
+                <Text style={styles.progressText}>
+                  {completedScenarios.length} / {scenariosData.length} completed
+                </Text>
+                <Text style={styles.progressPercent}>
+                  {Math.round(completionPercentage)}%
+                </Text>
+              </View>
+              <View style={styles.progressTrack}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { width: `${completionPercentage}%` },
+                  ]}
+                />
+              </View>
+            </View>
+          </View>
+        }
       />
     </SafeAreaView>
   );
@@ -163,13 +158,21 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
   },
-  progressBar: {
-    height: 4,
-    borderRadius: 2,
+  progressTrack: {
+    height: 6,
+    backgroundColor: colors.borderGray,
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: colors.neonGreen,
+    borderRadius: 3,
   },
   listContent: {
     paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.lg,
+    paddingTop: theme.spacing.lg,
+    paddingBottom: theme.spacing.xl,
   },
   scenarioHeader: {
     flexDirection: 'row',
@@ -189,8 +192,8 @@ const styles = StyleSheet.create({
     gap: theme.spacing.sm,
     flexWrap: 'wrap',
   },
-  completedBadge: {
-    fontSize: 24,
+  completedCheck: {
+    fontSize: 22,
     color: colors.neonGreen,
     fontWeight: '700',
   },

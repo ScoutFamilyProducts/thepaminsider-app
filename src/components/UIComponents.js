@@ -105,14 +105,14 @@ export const Heading = ({ level = 1, children, style }) => {
   return <Text style={headingStyles}>{children}</Text>;
 };
 
-export const Paragraph = ({ children, style, size = 'md' }) => {
+export const Paragraph = ({ children, style, size = 'md', numberOfLines }) => {
   const textStyles = [
     size === 'md' && styles.body,
     size === 'sm' && styles.bodySm,
     style,
   ];
 
-  return <Text style={textStyles}>{children}</Text>;
+  return <Text style={textStyles} numberOfLines={numberOfLines}>{children}</Text>;
 };
 
 export const Divider = ({ style }) => <View style={[styles.divider, style]} />;

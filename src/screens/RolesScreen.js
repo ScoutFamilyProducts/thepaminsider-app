@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -53,8 +54,6 @@ export default function RolesScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-const { Text } = require('react-native');
 
 const styles = StyleSheet.create({
   safeArea: {

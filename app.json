@@ -33,7 +33,8 @@
     ],
     "plugins": [],
     "updates": {
-      "enabled": false
+      "enabled": false,
+      "fallbackToCacheTimeout": 0
     }
   }
 }

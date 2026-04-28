@@ -12,7 +12,7 @@ import RoleDetailScreen from './src/screens/RoleDetailScreen';
 import SplashScreen from './src/screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
-const SPLASH_DURATION = 10000;
+const SPLASH_DURATION = 5000;
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,6 +64,7 @@ export default function App() {
       fontWeight: '600',
     },
     title: '',
+    headerBackTitle: '',
   };
 
   return (

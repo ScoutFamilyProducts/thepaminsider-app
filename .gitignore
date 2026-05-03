@@ -42,3 +42,5 @@ dist/
 # Testing
 coverage/
 .nyc_output/
+
+.claude/

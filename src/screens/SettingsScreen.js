@@ -16,7 +16,7 @@ import {
   Button,
 } from '../components/UIComponents';
 
-const VERSION = '1.0.0';
+const VERSION = '2.0.0';
 const SUPPORT_EMAIL = 'thepaminsider@gmail.com';
 
 export default function SettingsScreen() {
@@ -127,7 +127,7 @@ export default function SettingsScreen() {
         {/* Footer */}
         <View style={styles.footer}>
           <Paragraph style={styles.footerText}>
-            The PAM Field Guide © 2024
+            © 2026 The PAM Insider llc
           </Paragraph>
           <Paragraph style={styles.footerText}>
             By The PAM Insider

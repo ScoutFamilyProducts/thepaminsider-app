@@ -58,7 +58,7 @@ export default function LearnScreen({ navigation }) {
   const renderTerm = useCallback(({ item }) => {
     const isFavorited = favorites.includes(item.id);
     return (
-      <Card onPress={() => navigation.navigate('TermDetail', { termId: item.id })}>
+      <Card onPress={() => navigation.push('TermDetail', { termId: item.id })}>
         <View style={styles.termHeader}>
           <View style={styles.termTitleContainer}>
             <Heading level={3} style={styles.termTitle}>

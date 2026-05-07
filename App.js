@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colors } from './src/theme/colors';
@@ -39,18 +40,6 @@ export default function App() {
     return () => clearTimeout(splashTimer);
   }, []);
 
-  if (showSplash) {
-    return <SplashScreen />;
-  }
-
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, backgroundColor: colors.backgroundBlack, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={colors.neonGreen} />
-      </View>
-    );
-  }
-
   const detailScreenOptions = {
     headerShown: true,
     headerStyle: {
@@ -67,29 +56,70 @@ export default function App() {
     headerBackTitle: '',
   };
 
+  if (showSplash) {
+    return (
+      <SafeAreaProvider>
+        <SplashScreen />
+      </SafeAreaProvider>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <SafeAreaProvider>
+        <View style={{ flex: 1, backgroundColor: colors.backgroundBlack, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={colors.neonGreen} />
+        </View>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={showOnboarding ? 'Onboarding' : 'MainTabs'}
-        screenOptions={{
-          headerShown: false,
-          cardStyle: { backgroundColor: colors.backgroundBlack },
-        }}
-      >
-        <Stack.Screen
-          name="Onboarding"
-          component={OnboardingScreen}
-          options={{ animationEnabled: false }}
-        />
-        <Stack.Screen
-          name="MainTabs"
-          component={BottomTabNavigator}
-          options={{ animationEnabled: false }}
-        />
-        <Stack.Screen name="TermDetail" component={TermDetailScreen} options={detailScreenOptions} />
-        <Stack.Screen name="ScenarioDetail" component={ScenarioDetailScreen} options={detailScreenOptions} />
-        <Stack.Screen name="RoleDetail" component={RoleDetailScreen} options={detailScreenOptions} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={showOnboarding ? 'Onboarding' : 'MainTabs'}
+          screenOptions={{
+            headerShown: false,
+            cardStyle: { backgroundColor: colors.backgroundBlack },
+          }}
+        >
+          <Stack.Screen
+            name="Onboarding"
+            component={OnboardingScreen}
+            options={{ animationEnabled: false }}
+          />
+          <Stack.Screen
+            name="MainTabs"
+            component={BottomTabNavigator}
+            options={{ animationEnabled: false }}
+          />
+          <Stack.Screen
+            name="TermDetail"
+            component={TermDetailScreen}
+            options={{
+              ...detailScreenOptions,
+              headerBackTitle: 'Learn',
+            }}
+          />
+          <Stack.Screen
+            name="ScenarioDetail"
+            component={ScenarioDetailScreen}
+            options={{
+              ...detailScreenOptions,
+              headerBackTitle: 'Scenarios',
+            }}
+          />
+          <Stack.Screen
+            name="RoleDetail"
+            component={RoleDetailScreen}
+            options={{
+              ...detailScreenOptions,
+              headerBackTitle: 'Roles',
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

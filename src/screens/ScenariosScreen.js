@@ -46,7 +46,7 @@ export default function ScenariosScreen({ navigation }) {
     return (
       <Card
         onPress={() =>
-          navigation.navigate('ScenarioDetail', { scenarioId: item.id })
+          navigation.push('ScenarioDetail', { scenarioId: item.id })
         }
       >
         <View style={styles.scenarioHeader}>

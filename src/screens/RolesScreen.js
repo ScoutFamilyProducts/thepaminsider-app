@@ -31,7 +31,7 @@ export default function RolesScreen({ navigation }) {
           <Card
             key={role.id}
             onPress={() =>
-              navigation.navigate('RoleDetail', { roleId: role.id })
+              navigation.push('RoleDetail', { roleId: role.id })
             }
           >
             <View style={styles.roleHeader}>

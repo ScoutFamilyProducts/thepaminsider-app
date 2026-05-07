@@ -59,7 +59,7 @@ export default function HomeScreen({ navigation }) {
         {dailyData.term && (
           <Card
             onPress={() =>
-              navigation.navigate('TermDetail', { termId: dailyData.term.id })
+              navigation.push('TermDetail', { termId: dailyData.term.id })
             }
           >
             <Text style={styles.cardLabel}>📖 Term of the Day</Text>
@@ -78,7 +78,7 @@ export default function HomeScreen({ navigation }) {
           <Card
             style={styles.warningCard}
             onPress={() =>
-              navigation.navigate('ScenarioDetail', {
+              navigation.push('ScenarioDetail', {
                 scenarioId: dailyData.scenario.id,
               })
             }
@@ -111,7 +111,7 @@ export default function HomeScreen({ navigation }) {
         {dailyData.role && (
           <Card
             onPress={() =>
-              navigation.navigate('RoleDetail', { roleId: dailyData.role.id })
+              navigation.push('RoleDetail', { roleId: dailyData.role.id })
             }
           >
             <Text style={styles.cardLabel}>
